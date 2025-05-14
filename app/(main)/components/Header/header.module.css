@@ -20,3 +20,13 @@
   font-style: normal;
   font-size: x-large;
 }
+
+.currentUser {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  margin-right: 1em;
+  font-weight: bold;
+}
