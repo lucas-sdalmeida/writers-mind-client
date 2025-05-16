@@ -4,9 +4,9 @@ import ProfilePicture from '../ProfilePicture'
 
 const mrDafoe = Mr_Dafoe({ weight: '400', subsets: ['latin'] })
 
-export default function Header({ pageTitle }: Props) {
+export default function Header({ className, pageTitle }: Props) {
   return (
-    <header className={style.header}>
+    <header className={ ` ${className} ${style.header}` }>
       <h2 className={`${style.logo} ${mrDafoe.className}`}>
         Writer&apos;s Mind
       </h2>
@@ -22,4 +22,4 @@ export default function Header({ pageTitle }: Props) {
   )
 }
 
-type Props = { pageTitle?: string }
+type Props = { className?: string, pageTitle?: string }

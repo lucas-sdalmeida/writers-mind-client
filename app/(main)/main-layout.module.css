@@ -1,0 +1,23 @@
+.mainLayout {
+  width: 100dvw;
+  min-height: 100dvh;
+
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  grid-template-rows: auto 1fr;
+}
+
+.header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.sideBar {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.main {
+  grid-column: 2 / -1;
+  grid-row: 2;
+}
