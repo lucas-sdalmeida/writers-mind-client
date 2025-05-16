@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
-import '../globals.css'
-import style from './main.module.css'
-import Header from './components/Header'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: "Writer's Mind",
@@ -11,9 +9,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<Props>) {
   return (
-    <html lang='en'>
-      <body className={`${style.root} antialiased`}>
-        <Header />
+    <html lang='pt-br'>
+      <body>
         {children}
       </body>
     </html>
