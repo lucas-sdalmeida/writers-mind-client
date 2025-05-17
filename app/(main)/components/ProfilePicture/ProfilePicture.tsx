@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import style from './profilePicture.module.css'
+import style from './ProfilePicture.module.css'
 
 export default function ProfilePicture({ src, radius }: Readonly<Props>) {
   const actualRadius = radius ?? 48

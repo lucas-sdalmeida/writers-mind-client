@@ -1,5 +1,5 @@
 import { Mr_Dafoe } from 'next/font/google'
-import style from './header.module.css'
+import style from './Header.module.css'
 import ProfilePicture from '../ProfilePicture'
 
 const mrDafoe = Mr_Dafoe({ weight: '400', subsets: ['latin'] })
