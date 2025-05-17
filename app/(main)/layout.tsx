@@ -1,10 +1,10 @@
 import Header from './components/Header'
 
-import style from './main-layout.module.css'
+import style from './MainLayout.module.css'
 
 export default function MainLayout({ children }: Readonly<Props>) {
   return (
-    <div className={ style.mainLayout }>
+    <div className={ style.root }>
       <Header className={ style.header } />
 
       <nav className={ style.sideBar }>
@@ -21,7 +21,7 @@ export default function MainLayout({ children }: Readonly<Props>) {
         </div>
       </nav>
 
-      <main className={ style.main }>
+      <main className={ style.content }>
         {children}
       </main>
     </div>
