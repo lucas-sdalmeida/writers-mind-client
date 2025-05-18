@@ -1,0 +1,82 @@
+.attributesTab {
+  height: 100%;
+  padding: 1.5rem 3rem 0;
+}
+
+.header {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--light-blue, #10c3e2);
+  font-weight: bold;
+}
+
+.card {
+  height: 100%;
+
+  padding: 1.5rem 2.5rem;
+  border-radius: 2rem;
+
+  box-shadow: 4px 4px 4px 2px #00000040;
+
+  background-color: #f6f6f6;
+}
+
+.cardHeader {
+  display: grid;
+  grid-template-columns: 3fr 6fr 2fr;
+  gap: .5rem;
+}
+
+.cardHeader h4 {
+  color: #444444;
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.attributesList {
+  list-style: none;
+
+  margin: 1.25rem 0 1.75rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.attribute {
+  height: 1.5rem;
+
+  display: grid;
+  grid-template-columns: 3fr 6fr 2fr;
+  gap: .5rem
+}
+
+.attribute input, .attribute input:disabled {
+  padding: 0 .75rem;
+
+  border: none;
+  border-bottom: 1px solid var(--light-blue, #10c3e2);
+
+  background-color: #f6f6f6;
+}
+
+.attribute input:focus {
+  outline: none;
+  border-bottom: 2px solid var(--light-blue, #10c3e2);
+}
+
+.addMore {
+  width: 100%;
+
+  color: var(--light-blue, #10c3e2);
+  
+  font-size: .75rem;
+  font-weight: bold;
+
+  text-align: center;
+
+  cursor: pointer;
+}
+
+.addMore:hover {
+  text-decoration: underline;
+}

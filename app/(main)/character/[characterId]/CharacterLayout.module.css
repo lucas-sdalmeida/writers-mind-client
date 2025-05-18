@@ -1,0 +1,23 @@
+.characterLayout {
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 4fr 1fr;
+}
+
+.tabs {
+  grid-column: 1;
+  grid-row: 1;
+
+  height: 100%;
+}
+
+.drawings {
+  grid-column: 2;
+  grid-row: 1 / -1;
+
+  box-shadow: -1rem 0rem 1rem #d9d9d9;
+
+  background-color: #d9d9d9;
+}
