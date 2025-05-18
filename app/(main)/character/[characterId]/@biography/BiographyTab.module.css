@@ -1,0 +1,49 @@
+.biographyTab {
+  height: 100%;
+  padding: 1.5rem 3rem;
+}
+
+.header {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--light-blue, #10c3e2);
+  font-weight: bold;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.seeTimeLine {
+  color: var(--light-blue, #10c3e2);
+  font-size: .6rem;
+
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.seeTimeLine p:hover {
+  text-decoration: underline;
+}
+
+.biographyPoints {
+  list-style: none;
+
+  margin: 1rem 0;
+}
+
+.mark {
+  width: 100%;
+
+  margin-bottom: 1.5rem;
+  padding: .5rem 1.5rem;
+  border-radius: .5rem;
+  
+  box-shadow: 2px 4px 4px 2px #00000040;
+
+  background-color: #f6f6f6;
+}
+
+.mark:last-child {
+  margin: 0;
+}
