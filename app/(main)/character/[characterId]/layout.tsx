@@ -1,10 +1,10 @@
 import style from './CharacterLayout.module.css'
 
-export default function CharacterLayout({ biography }: Readonly<Props>) {
+export default function CharacterLayout({ arcs }: Readonly<Props>) {
   return (
     <div className={ style.characterLayout }>
       <div className={ style.tabs }>
-        { biography }
+        { arcs }
       </div>
 
       <div className={ style.drawings }>
