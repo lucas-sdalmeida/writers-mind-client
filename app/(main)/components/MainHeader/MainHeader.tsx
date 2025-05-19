@@ -4,7 +4,7 @@ import style from './Header.module.css'
 
 const mrDafoe = Mr_Dafoe({ weight: '400', subsets: ['latin'] })
 
-export default function Header({ className, pageTitle }: Props) {
+export default function MainHeader({ className, pageTitle }: Props) {
   return (
     <header className={ ` ${className} ${style.header}` }>
       <h2 className={ mrDafoe.className }>
