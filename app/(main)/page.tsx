@@ -1,3 +1,4 @@
+import StoryCard from './components/StoryCard'
 import style from './HomePage.module.css'
 
 export default function HomePage() {
@@ -12,15 +13,7 @@ export default function HomePage() {
           <div className={ style.cardImage }>+</div>
         </div>
 
-        <div className={ style.card }>
-          <div className={ style.cardImage }></div>
-          <div className={ style.storyDetailAndOptions }>
-            <h4>História A</h4>
-            <div>
-
-            </div>
-          </div>
-        </div>
+        <StoryCard id='1' title='História A' />
       </div>
 
     </div>
