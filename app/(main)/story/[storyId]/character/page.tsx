@@ -1,3 +1,4 @@
+import CharacterCard from './components/CharacterCard'
 import style from './CharactersPage.module.css'
 
 export default function CharactersPage() {
@@ -8,20 +9,7 @@ export default function CharactersPage() {
       </header>
 
       <div className={ style.charactersList }>
-        <div className={ style.characterCard }>
-          <div className={ style.characterDrawing }>
-
-          </div>
-
-          <div className={ style.characterDescription }>
-            <h4>Personagem 1</h4>
-            <p>Era uma vez...</p>
-          </div>
-
-          <div className={ style.deleteCharacter }>
-
-          </div>
-        </div>
+        <CharacterCard character={{ id: '1', storyId: '1', name: 'Personagem 1', coverBiography: 'Era uma vez...' }} />
       </div>
     </div>
   )
