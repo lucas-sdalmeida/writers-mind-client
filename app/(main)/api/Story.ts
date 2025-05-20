@@ -1,4 +1,5 @@
 type Story = {
+    id: string,
     title: string,
     coverDrawing?: string,
     objectives?: string,
