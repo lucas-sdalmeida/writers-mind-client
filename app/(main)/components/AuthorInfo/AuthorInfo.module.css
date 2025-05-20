@@ -5,12 +5,13 @@
 }
 
 .link {
+  color: black;
   text-decoration: none;
 }
 
 .link:visited {
   text-decoration: none;
-  color: black
+  color: black;
 }
 
 .leftOrientation {
