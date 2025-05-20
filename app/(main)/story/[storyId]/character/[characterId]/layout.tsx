@@ -1,11 +1,10 @@
+import Tabs from './components/Tabs'
 import style from './CharacterLayout.module.css'
 
-export default function CharacterLayout({ arcs }: Readonly<Props>) {
+export default function CharacterLayout({ attributes, biography, arcs }: Readonly<Props>) {
   return (
     <div className={ style.characterLayout }>
-      <div className={ style.tabs }>
-        { arcs }
-      </div>
+      <Tabs className={ style.tabs } tabs={[attributes, biography, arcs]} />
 
       <div className={ style.drawings }>
 
