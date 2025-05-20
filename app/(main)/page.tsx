@@ -33,5 +33,9 @@ export default async function HomePage() {
 }
 
 async function getStories() {
-  return await getAllStories()
+  try {
+    return await getAllStories()
+  } catch {
+    return { stories: [] }
+  }
 }
