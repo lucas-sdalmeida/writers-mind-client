@@ -2,9 +2,22 @@
 
 import { useState } from 'react'
 import style from './StoryForm.module.css'
+import { postStory } from '../../api/post-story'
+import { useRouter } from 'next/navigation'
 
 export default function StoryForm({ story }: Readonly<Props>) {
+  const router = useRouter()
   const [editingStory, setEditingStory] = useState(story ?? {} as EditingStory)
+
+  const handlePost = async () => {
+    try {
+      await postStory({...editingStory, title: editingStory?.title ?? ''})
+      router.push('/')
+    }
+    catch (e: any) {
+      console.error(e);
+    }
+  }
 
   return (
     <div className={ style.storyForm }>
@@ -29,7 +42,14 @@ export default function StoryForm({ story }: Readonly<Props>) {
           />
         </header>
 
-        <form id='storyForm' className={ style.form } onSubmit={ e => e.preventDefault() }>
+        <form 
+          id='storyForm' 
+          className={ style.form } 
+          onSubmit={ async (e) => { 
+            e.preventDefault() 
+            await handlePost()
+          }}
+        >
           <div className={ style.formFields }>
             <input
               type="text"
