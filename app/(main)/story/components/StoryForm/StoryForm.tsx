@@ -4,6 +4,8 @@ import { useState } from 'react'
 import style from './StoryForm.module.css'
 import { postStory } from '../../api/post-story'
 import { useRouter } from 'next/navigation'
+import { updateStory } from '../../api/update-story'
+import Story from '@/app/(main)/api/Story'
 
 export default function StoryForm({ story }: Readonly<Props>) {
   const router = useRouter()
@@ -14,8 +16,18 @@ export default function StoryForm({ story }: Readonly<Props>) {
       await postStory({...editingStory, title: editingStory?.title ?? ''})
       router.push('/')
     }
-    catch (e: any) {
-      console.error(e);
+    catch (e) {
+      console.error(e)
+    }
+  }
+
+  const handlePut = async () => {
+    try {
+      await updateStory({...editingStory, id: story?.id ?? '', title: editingStory?.title ?? story?.title ?? '' })
+      router.push('/')
+    }
+    catch (e) {
+      console.error(e)
     }
   }
 
@@ -42,11 +54,15 @@ export default function StoryForm({ story }: Readonly<Props>) {
           />
         </header>
 
-        <form 
-          id='storyForm' 
-          className={ style.form } 
-          onSubmit={ async (e) => { 
-            e.preventDefault() 
+        <form
+          id='storyForm'
+          className={ style.form }
+          onSubmit={ async (e) => {
+            e.preventDefault()
+            if (story) {
+              await handlePut()
+              return
+            }
             await handlePost()
           }}
         >
@@ -108,16 +124,7 @@ export default function StoryForm({ story }: Readonly<Props>) {
 }
 
 type Props = {
-  story?: {
-    title: string,
-    coverDrawing?: string,
-    objectives?: string,
-    themes?: string,
-    mainPlot?: string,
-    genres?: string,
-    setting?: string,
-    summary?: string,
-  },
+  story?: Story,
 }
 
 type EditingStory = {
