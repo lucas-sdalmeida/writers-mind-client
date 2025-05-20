@@ -15,7 +15,7 @@ export default function StoryCard({ id, title, image }: Readonly<{ id: string, t
 
         <span>
           <a href="">L</a>
-          <a href="">C</a>
+          <Link href={ `/story/${id}/character` }>C</Link>
           <a href="">G</a>
           <a href="">M</a>
         </span>
