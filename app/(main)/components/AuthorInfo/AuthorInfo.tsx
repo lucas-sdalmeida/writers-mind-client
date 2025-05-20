@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import ProfilePicture from '../ProfilePicture'
 
 import style from './AuthorInfo.module.css'
@@ -7,9 +9,11 @@ export default async function AuthorInfo({ orientation }: Readonly<{ orientation
   const user = await findCurrentUser()
 
   return (
-    <div className={ `${style.authorInfo} ${orientationClass}` }>
-      <UsernameAndPseudonym user={ user } className={ orientationClass } />
-      <ProfilePicture radius={ 36 } src={ user.pictureUrl || 'https://picsum.photos/seed/profile/40' } />
+    <div>
+      <Link href='/author/1' className={ `${style.authorInfo} ${orientationClass} ${style.link}` }>
+        <UsernameAndPseudonym user={ user } className={ orientationClass } />
+        <ProfilePicture radius={ 36 } src={ user.pictureUrl || 'https://picsum.photos/seed/profile/40' } />
+      </Link>
     </div>
   )
 }

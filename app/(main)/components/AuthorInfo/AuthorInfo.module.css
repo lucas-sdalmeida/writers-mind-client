@@ -4,6 +4,15 @@
   gap: .5rem;
 }
 
+.link {
+  text-decoration: none;
+}
+
+.link:visited {
+  text-decoration: none;
+  color: black
+}
+
 .leftOrientation {
   flex-direction: row;
   justify-content: flex-start;
