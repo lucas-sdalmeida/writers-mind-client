@@ -62,6 +62,10 @@
   margin: 0;
 }
 
-.optionsList li.selected {
+.optionsList .link.selected {
   color: #009951;
+}
+
+.link, .link:visited {
+  text-decoration: none;
 }
