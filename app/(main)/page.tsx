@@ -15,7 +15,7 @@ export default function HomePage() {
       <div className={ style.storiesList }>
         <div className={ style.addMoreStoriesCard }>
           <ImageCard />
-          <Link href='/story/1' className={ style.link }>+</Link>
+          <Link href='/story' className={ style.link }>+</Link>
         </div>
 
         <StoryCard id='1' title='História A' />
