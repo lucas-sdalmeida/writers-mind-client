@@ -1,2 +1,2 @@
-import StoryForm from "./StoryForm";
+import StoryForm from './StoryForm'
 export default StoryForm

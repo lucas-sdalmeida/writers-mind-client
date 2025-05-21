@@ -1,2 +1,2 @@
-import CharacterCard from "./CharacterCard";
+import CharacterCard from './CharacterCard'
 export default CharacterCard

@@ -10,9 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<Props>) {
   return (
     <html lang='pt-br'>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

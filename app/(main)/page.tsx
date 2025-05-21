@@ -12,22 +12,23 @@ export default async function HomePage() {
   const stories = await getStories()
 
   return (
-    <div className={ style.home }>
-      <header className={ style.header }>
+    <div className={style.home}>
+      <header className={style.header}>
         <h2>Salão das Histórias</h2>
       </header>
 
-      <div className={ style.storiesList }>
-        <div className={ style.addMoreStoriesCard }>
+      <div className={style.storiesList}>
+        <div className={style.addMoreStoriesCard}>
           <ImageCard />
-          <Link href='/story' className={ style.link }>+</Link>
+          <Link href='/story' className={style.link}>
+            +
+          </Link>
         </div>
 
-        { 
-          stories.stories.map((s) => <StoryCard key={s.id} id={s.id} title={s.title} />)
-        }
+        {stories.stories.map((s) => (
+          <StoryCard key={s.id} id={s.id} title={s.title} />
+        ))}
       </div>
-
     </div>
   )
 }

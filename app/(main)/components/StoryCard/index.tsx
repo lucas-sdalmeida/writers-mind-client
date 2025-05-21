@@ -1,2 +1,2 @@
-import StoryCard from "./StoryCard";
+import StoryCard from './StoryCard'
 export default StoryCard

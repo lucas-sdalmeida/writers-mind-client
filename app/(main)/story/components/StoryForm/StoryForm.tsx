@@ -9,55 +9,63 @@ import Story from '@/app/(main)/api/Story'
 
 export default function StoryForm({ story }: Readonly<Props>) {
   const router = useRouter()
-  const [editingStory, setEditingStory] = useState(story ?? {} as EditingStory)
+  const [editingStory, setEditingStory] = useState(
+    story ?? ({} as EditingStory),
+  )
 
   const handlePost = async () => {
     try {
-      await postStory({...editingStory, title: editingStory?.title ?? ''})
+      await postStory({ ...editingStory, title: editingStory?.title ?? '' })
       router.push('/')
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e)
     }
   }
 
   const handlePut = async () => {
     try {
-      await updateStory({...editingStory, id: story?.id ?? '', title: editingStory?.title ?? story?.title ?? '' })
+      await updateStory({
+        ...editingStory,
+        id: story?.id ?? '',
+        title: editingStory?.title ?? story?.title ?? '',
+      })
       router.push('/')
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e)
     }
   }
 
   return (
-    <div className={ style.storyForm }>
-      <div className={ style.drawing }>
+    <div className={style.storyForm}>
+      <div className={style.drawing}>
         <input
           form='storyForm'
-          type="image"
-          value={ editingStory?.coverDrawing ?? '' }
-          onChange={ (e) => setEditingStory({...editingStory, coverDrawing: e.target.value}) }
+          type='image'
+          value={editingStory?.coverDrawing ?? ''}
+          onChange={(e) =>
+            setEditingStory({ ...editingStory, coverDrawing: e.target.value })
+          }
         />
       </div>
 
-      <section className={ style.storyInfo }>
-        <header className={ style.header }>
+      <section className={style.storyInfo}>
+        <header className={style.header}>
           <input
-            className={ style.titleField }
+            className={style.titleField}
             form='storyForm'
-            type="text"
+            type='text'
             placeholder='História A'
-            value={ editingStory?.title ?? '' }
-            onChange={ (e) => setEditingStory({...editingStory, title: e.target.value}) }
+            value={editingStory?.title ?? ''}
+            onChange={(e) =>
+              setEditingStory({ ...editingStory, title: e.target.value })
+            }
           />
         </header>
 
         <form
           id='storyForm'
-          className={ style.form }
-          onSubmit={ async (e) => {
+          className={style.form}
+          onSubmit={async (e) => {
             e.preventDefault()
             if (story) {
               await handlePut()
@@ -66,55 +74,67 @@ export default function StoryForm({ story }: Readonly<Props>) {
             await handlePost()
           }}
         >
-          <div className={ style.formFields }>
+          <div className={style.formFields}>
             <input
-              type="text"
-              name="objectives"
+              type='text'
+              name='objectives'
               placeholder='Qual o objetivo da sua história?'
-              value={ editingStory?.objectives ?? '' }
-              onChange={ (e) => setEditingStory({...editingStory, objectives: e.target.value}) }
+              value={editingStory?.objectives ?? ''}
+              onChange={(e) =>
+                setEditingStory({ ...editingStory, objectives: e.target.value })
+              }
             />
 
             <input
-              type="text"
-              name="themes"
+              type='text'
+              name='themes'
               placeholder='Quais os temas abordados?'
-              value={ editingStory?.themes ?? '' }
-              onChange={ (e) => setEditingStory({...editingStory, themes: e.target.value}) }
-              />
+              value={editingStory?.themes ?? ''}
+              onChange={(e) =>
+                setEditingStory({ ...editingStory, themes: e.target.value })
+              }
+            />
 
             <input
-              type="text"
-              name="mainPlot"
+              type='text'
+              name='mainPlot'
               placeholder='Qual a jornada principal? O que os protagonistas buscam?'
-              value={ editingStory?.mainPlot ?? '' }
-              onChange={ (e) => setEditingStory({...editingStory, mainPlot: e.target.value}) }
+              value={editingStory?.mainPlot ?? ''}
+              onChange={(e) =>
+                setEditingStory({ ...editingStory, mainPlot: e.target.value })
+              }
             />
 
             <input
-              type="text"
-              name="genres"
+              type='text'
+              name='genres'
               placeholder='Em quais gêneros a história se encaixa melhor?'
-              value={ editingStory?.genres ?? '' }
-              onChange={ (e) => setEditingStory({...editingStory, genres: e.target.value}) }
+              value={editingStory?.genres ?? ''}
+              onChange={(e) =>
+                setEditingStory({ ...editingStory, genres: e.target.value })
+              }
             />
 
             <input
-              type="text"
-              name="setting"
+              type='text'
+              name='setting'
               placeholder='Como é o mundo no qual ela se passa?'
-              value={ editingStory?.setting ?? '' }
-              onChange={ (e) => setEditingStory({...editingStory, setting: e.target.value}) }
+              value={editingStory?.setting ?? ''}
+              onChange={(e) =>
+                setEditingStory({ ...editingStory, setting: e.target.value })
+              }
             />
 
             <textarea
-              name="summary"
+              name='summary'
               placeholder='Como você resumiria sua história?'
-              value={ editingStory?.summary ?? '' }
-              onChange={ (e) => setEditingStory({...editingStory, summary: e.target.value}) }
+              value={editingStory?.summary ?? ''}
+              onChange={(e) =>
+                setEditingStory({ ...editingStory, summary: e.target.value })
+              }
             ></textarea>
           </div>
-          <div className={ style.formControls }>
+          <div className={style.formControls}>
             <button>Salvar</button>
           </div>
         </form>
@@ -124,16 +144,16 @@ export default function StoryForm({ story }: Readonly<Props>) {
 }
 
 type Props = {
-  story?: Story,
+  story?: Story
 }
 
 type EditingStory = {
-    title?: string,
-    coverDrawing?: string,
-    objectives?: string,
-    themes?: string,
-    mainPlot?: string,
-    genres?: string,
-    setting?: string,
-    summary?: string,
-  }
+  title?: string
+  coverDrawing?: string
+  objectives?: string
+  themes?: string
+  mainPlot?: string
+  genres?: string
+  setting?: string
+  summary?: string
+}

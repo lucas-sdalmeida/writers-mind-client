@@ -7,8 +7,8 @@ export default async function StoryPage({ params }: Readonly<Props>) {
   const story = await getOneStory(storyId)
 
   return (
-    <div className={ style.storyPage }>
-      <StoryForm story={ story } />
+    <div className={style.storyPage}>
+      <StoryForm story={story} />
     </div>
   )
 }
