@@ -2,22 +2,20 @@ import Link from 'next/link'
 
 import ProfilePicture from '../ProfilePicture'
 
-import style from './AuthorInfo.module.css'
-
 export default async function AuthorInfo({
   orientation,
 }: Readonly<{ orientation: Orientation }>) {
   const orientationClass =
     orientation == Orientation.LEFT
-      ? style.leftOrientation
-      : style.rightOrientation
+      ? 'flex-row justify-start'
+      : 'flex-row-reverse justify-end'
   const user = await findCurrentUser()
 
   return (
     <div>
       <Link
         href='/author/1'
-        className={`${style.authorInfo} ${orientationClass} ${style.link}`}
+        className={`flex items-center gap-2 ${orientationClass} text-black decoration-0`}
       >
         <UsernameAndPseudonym user={user} className={orientationClass} />
         <ProfilePicture
@@ -47,9 +45,9 @@ function UsernameAndPseudonym({
   className,
 }: Readonly<UsernameAndPseudonymProps>) {
   return (
-    <div className={`${style.usernameAndPseudonym} ${className}`}>
-      <p className={style.username}>{user.username}</p>
-      {user.pseudonym && <p className={style.pseudonym}>{user.pseudonym}</p>}
+    <div className={`py-1 flex flex-col justify-center ${className}`}>
+      <p className='text-sm font-bold'>{user.username}</p>
+      {user.pseudonym && <p className='text-[.65rem] font-bold text-[#444444]'>{user.pseudonym}</p>}
     </div>
   )
 }

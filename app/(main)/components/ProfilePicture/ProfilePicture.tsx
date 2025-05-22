@@ -1,12 +1,11 @@
 import Image from 'next/image'
-import style from './ProfilePicture.module.css'
 
 export default function ProfilePicture({ src, radius }: Readonly<Props>) {
   const actualRadius = radius ?? 48
 
   return (
     <div
-      className={`${style.picture}`}
+      className={`bg-[#10c3e2] overflow-hidden`}
       style={{
         width: actualRadius,
         height: actualRadius,
