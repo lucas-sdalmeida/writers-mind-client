@@ -1,16 +1,14 @@
 import MainHeader from './components/MainHeader'
 import SideBar from './components/SideBar'
 
-import style from './MainLayout.module.css'
-
 export default function MainLayout({ children }: Readonly<Props>) {
   return (
-    <div className={style.root}>
-      <MainHeader className={style.header} />
+    <div className='w-dvw min-h-dvh grid grid-cols-[13rem_1fr] grid-rows-[auto_1fr] relative'>
+      <MainHeader className='col-span-full row-start-1 relative z-[60]' />
 
-      <SideBar className={style.sideBar} />
+      <SideBar className='col-start-1 row-start-2 relative z-[90]' />
 
-      <main className={style.content}>{children}</main>
+      <main className='col-start-2 row-start-2 relative z-30'>{children}</main>
     </div>
   )
 }
