@@ -1,7 +1,6 @@
 import Link from 'next/link'
 
 import ImageCard from '../ImageCard'
-import style from './StoryCard.module.css'
 
 export default function StoryCard({
   id,
@@ -10,14 +9,14 @@ export default function StoryCard({
 }: Readonly<{ id: string; title: string; image?: string }>) {
   return (
     <div>
-      <Link className={style.storyImage} href={`/story/${id}`}>
+      <Link className='decoration-0 rounded-2xl' href={`/story/${id}`}>
         <ImageCard src={image} alt='' />
       </Link>
 
-      <div className={style.cardOptions}>
+      <div className='mt-2 px-4 text-[#444444] flex justify-between'>
         <h4>{title}</h4>
 
-        <span>
+        <span className='flex justify-end items-center gap-2'>
           <a href=''>L</a>
           <Link href={`/story/${id}/character`}>C</Link>
           <a href=''>G</a>
