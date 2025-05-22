@@ -1,4 +1,4 @@
-import StoryForm from '../components/StoryForm'
+import StoryForm from './components/StoryForm'
 import { getOneStory } from './api/get-one-story'
 import style from './StoryPage.module.css'
 

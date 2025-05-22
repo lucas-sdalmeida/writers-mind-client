@@ -1,4 +1,4 @@
-import Story from '@/app/(main)/api/Story'
+import Story from '@/app/(main)/story/api/Story'
 
 export async function getOneStory(id: string) {
   const response = await fetch(`http://localhost:9090/story/${id}`)
