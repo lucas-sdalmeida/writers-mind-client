@@ -6,19 +6,37 @@ const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
 export default async function HomePage() {
   return (
-    <section className='w-full max-w-screen-xl h-full mx-auto px-6 pt-10 pb-6'>
-      <header className='w-full px-1 border-b-[1px] border-b-[#10c3e2] flex justify-between'>
-        <h2 className={`${inter.className} text-[#444444] text-2xl`}>Salão das Histórias</h2>
-
-        <div className={`${quicksand.className} text-sm flex gap-2 items-center`}>
-          <Link href='/story/trash' className='text-[#e21010] no-underline hover:underline'>Lixeixa</Link>
-          <Link href='/story/draft' className='text-[#10c3e2] no-underline hover:underline'>Adicionar História</Link>
+    <div className='w-full h-full px-8 pt-10 pb-6 grid grid-cols-12 grid-rows-1'>
+      <nav className='col-start-1 col-span-2 h-full px-2 py-6 flex flex-col border-r-[1px] border-r-gray-300'>
+        <div className='w-full mb-3 pb-1 border-b-[1px] border-b-[#10c3e2]'>
+          <div className='px-2 py-1 text-gray-400 text-sm'>Pesquisar</div>
         </div>
-      </header>
 
-      <div className="w-full px-1 py-4 flex gap-3 flex-wrap">
+        <ul className={`${quicksand.className} list-none w-full`}>
+          <li className='mb-2 last:mb-0 px-2 py-1 rounded-lg text-emerald-600 text-sm hover:underline hover:bg-gray-200'>
+            Salão das Histórias
+          </li>
 
-      </div>
-    </section>
+          <li className='mb-2 last:mb-0 px-2 py-1 rounded-lg text-sm hover:underline hover:bg-gray-200'>
+            <Link href='/story/overview'>Nova história</Link>
+          </li>
+
+          <li className='mb-2 last:mb-0 px-2 py-1 rounded-lg text-sm hover:underline hover:bg-gray-200'>
+            Lixeira
+          </li>
+        </ul>
+      </nav>
+
+      <section className='col-start-3 col-span-10 h-full px-8'>
+        <header className='w-full px-1 border-b-[1px] border-b-[#10c3e2]'>
+          <h2 className={`${inter.className} text-2xl`}>Salão das Histórias</h2>
+        </header>
+
+        <div className="w-full px-1 py-4 flex gap-3 flex-wrap overflow-y-auto">
+
+        </div>
+      </section>
+
+    </div>
   )
 }
