@@ -1,7 +1,7 @@
 type Story = {
   id: string
   title: string
-  coverDrawing?: string
+  coverImage?: string
   objectives?: string
   themes?: string
   mainPlot?: string
