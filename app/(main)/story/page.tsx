@@ -1,6 +1,8 @@
 import { Inter, Quicksand } from "next/font/google"
 import Link from "next/link"
 
+import StoryCard from "./components/StoryCard"
+
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
@@ -27,13 +29,13 @@ export default async function HomePage() {
         </ul>
       </nav>
 
-      <section className='col-start-3 col-span-10 h-full px-8'>
+      <section className='col-start-3 col-span-10 h-full px-8 flex flex-col gap-3'>
         <header className='w-full px-1 border-b-[1px] border-b-[#10c3e2]'>
           <h2 className={`${inter.className} text-2xl`}>Salão das Histórias</h2>
         </header>
 
-        <div className="w-full px-1 py-4 flex gap-3 flex-wrap overflow-y-auto">
-
+        <div className="flex-1 w-full px-1 py-4 flex gap-3 flex-wrap overflow-y-auto">
+          <StoryCard story={{ id: '1', title: 'História A' }} />
         </div>
       </section>
 
