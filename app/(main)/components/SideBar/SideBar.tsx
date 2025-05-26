@@ -1,26 +1,45 @@
-import Link from 'next/link'
-import AuthorInfo, { Orientation } from '../AuthorInfo'
+'use client'
 
-export default function SideBar({
-  className,
-}: Readonly<{ className?: string }>) {
+import { Quicksand } from 'next/font/google'
+
+import { useState } from 'react'
+import React from 'react'
+
+const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
+
+export default function SideBar({ className, children, header, selectedIndex }: Readonly<Props>) {
+  const [selected, setSelected] = useState(selectedIndex)
+
   return (
-    <nav className={`${className} px-3 border-t-[#10c3e2] border-t-[1px] shadow-[2px_4px_4px_2px_#00000040] bg-[#f6f6f6] flex flex-col`}>
-      <div className='flex-grow-0 flex-shrink-0 py-3 mb-6 border-b-[#10c3e2] botder-b-[1px]'>
-        <AuthorInfo orientation={Orientation.RIGHT} />
-      </div>
+    <nav className={`${className} h-full px-2 py-6 flex flex-col border-r-[1px] border-r-gray-300`}>
+        {
+          header &&
+            <div className='w-full mb-3 px-2 pb-1 border-b-[1px] border-b-[#10c3e2] flex items-center gap-1'>
+              { header }
+            </div>
+        }
 
-      <ul className='flex-grow list-none'>
-        <li className='mb-3 text-sm font-bold last:mb-0'>
-          <Link href='/' className='text-emerald-600'>
-            Salão das Histórias
-          </Link>
-        </li>
-      </ul>
-
-      <div className='flex flex-grow-0 flex-shrink-0 py-3 mb-6 border-t-[#10c3e2] border-t-[1px]'>
-        <button className='border-none text-[#e21010] text-[.75rem] font-bold uppercase hover:text-[#a21010]'>Sair</button>
-      </div>
-    </nav>
+        <ul className={`${quicksand.className} list-none w-full`}>
+          {
+            React.Children.map(children, (child, index) => {
+              return (
+                <li
+                  key={index} 
+                  className={`mb-2 last:mb-0 px-2 py-1 rounded-lg ${selected == index && 'text-emerald-600'} text-sm hover:underline hover:bg-gray-200`}
+                >
+                  { child }
+                </li>
+              )
+            })
+          }
+        </ul>
+      </nav>
   )
+}
+
+type Props = {
+  children: React.ReactNode,
+  header?: React.ReactNode,
+  className?: string,
+  selectedIndex: number,
 }
