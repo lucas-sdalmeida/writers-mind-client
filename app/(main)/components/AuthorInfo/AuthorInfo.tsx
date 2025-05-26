@@ -1,6 +1,9 @@
 import Link from 'next/link'
+import { Inter } from 'next/font/google'
 
 import ProfilePicture from '../ProfilePicture'
+
+const inter = Inter({ weight: '600', subsets: ['latin'] })
 
 export default async function AuthorInfo({
   orientation, hidePseudonym
@@ -15,13 +18,10 @@ export default async function AuthorInfo({
     <div>
       <Link
         href='/author/1'
-        className={`flex items-center gap-2 ${orientationClass} text-black decoration-0`}
+        className={`${inter.className} flex items-center gap-2 ${orientationClass} text-black decoration-0`}
       >
         <UsernameAndPseudonym user={user} className={orientationClass} hidePseudonym={hidePseudonym} />
-        <ProfilePicture
-          radius={36}
-          src={user.pictureUrl || 'https://picsum.photos/seed/me/40'}
-        />
+        <ProfilePicture radius={36} src={user.pictureUrl} />
       </Link>
     </div>
   )
