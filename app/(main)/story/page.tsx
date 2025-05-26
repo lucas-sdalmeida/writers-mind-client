@@ -22,8 +22,8 @@ export default async function HomePage() {
         }
       >
         <LinkOption href='#' icon={<LibraryBig size={16} />}>Salão das Histórias</LinkOption>
-        <LinkOption href='/sotry/overview' icon={<BookPlus size={16} />}>Nova História</LinkOption>
-        <LinkOption href='/sotry/trash' icon={<Trash2 size={16} />}>Lixeira</LinkOption>
+        <LinkOption href='/story/overview' icon={<BookPlus size={16} />}>Nova História</LinkOption>
+        <LinkOption href='/story/trash' icon={<Trash2 size={16} />}>Lixeira</LinkOption>
       </SideBar>
 
       <section className='col-start-3 col-span-10 h-full px-8 flex flex-col gap-3'>
