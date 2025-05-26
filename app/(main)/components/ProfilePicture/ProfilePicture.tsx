@@ -13,16 +13,16 @@ export default function ProfilePicture({ src, radius }: Readonly<Props>) {
         borderRadius: actualRadius / 2,
       }}
     >
-      {
-        src
-          ? <Image
-              src={src}
-              alt={"User's profile picture"}
-              width={actualRadius}
-              height={actualRadius}
-            />
-          : <UserRound size={actualRadius * .75} strokeWidth={1} />
-      }
+      {src ? (
+        <Image
+          src={src}
+          alt={"User's profile picture"}
+          width={actualRadius}
+          height={actualRadius}
+        />
+      ) : (
+        <UserRound size={actualRadius * 0.75} strokeWidth={1} />
+      )}
     </div>
   )
 }
