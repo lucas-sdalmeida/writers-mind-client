@@ -20,7 +20,7 @@ export default function CreateStoryPage() {
         <LinkOption href='/story' icon={<LibraryBig size={16} />}>
           Salão das Histórias
         </LinkOption>
-        <LinkOption href='/story' icon={<BookPlus size={16} />}>
+        <LinkOption href='#' icon={<BookPlus size={16} />}>
           Nova História
         </LinkOption>
       </SideBar>
