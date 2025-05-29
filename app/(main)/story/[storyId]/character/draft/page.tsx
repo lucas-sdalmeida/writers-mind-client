@@ -15,7 +15,7 @@ export default function CharacterDraftPage() {
         <div className='w-full px-1 border-b-[1px] border-b-[#10c3e2]'>
           <label className='w-full flex items-start gap-3'>
             <input
-              className={`${inter.className} text-2xl bg-transparent outline-none placeholder-gray-400`}
+              className={`${inter.className} bg-transparent outline-none placeholder-gray-400`}
               value={character.name ?? ''}
               placeholder='Me chamo...'
               onChange={(e) =>
