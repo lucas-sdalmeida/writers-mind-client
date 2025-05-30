@@ -19,7 +19,7 @@ export default function EditableText({
         name={name}
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={(e) => onChange && onChange(e.target.value)}
       />
 
       <PenSquare size={14} />
@@ -31,5 +31,5 @@ type Props = {
   name?: string
   placeholder?: string
   value?: string
-  onChange?: () => void
+  onChange?: (value: string) => void
 }

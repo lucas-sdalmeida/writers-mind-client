@@ -8,7 +8,7 @@ export default function InputField({
   name,
   placeholder,
   value,
-  onClick,
+  onChange,
 }: Readonly<Props>) {
   return (
     <label className={`${quicksand.className} flex items-center gap-3`}>
@@ -19,7 +19,7 @@ export default function InputField({
         name={name}
         placeholder={placeholder}
         value={value}
-        onClick={onClick}
+        onChange={(e) => onChange && onChange(e.target.value)}
       />
     </label>
   )
@@ -31,5 +31,5 @@ type Props = {
   name?: string
   placeholder?: string
   value?: number | string | readonly string[]
-  onClick?: () => void
+  onChange?: (value: number | string | readonly string[]) => void
 }

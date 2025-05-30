@@ -15,7 +15,7 @@ export default function TextArea({
       name={name}
       placeholder={placeholder}
       value={value}
-      onChange={onChange}
+      onChange={(e) => onChange && onChange(e.target.value)}
     ></textarea>
   )
 }
@@ -25,5 +25,5 @@ type Props = {
   name?: string
   placeholder?: string
   value?: string
-  onChange?: () => void
+  onChange?: (value: string) => void
 }
