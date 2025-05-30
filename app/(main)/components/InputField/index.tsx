@@ -1,2 +1,3 @@
 import InputField from './InputField'
-export default InputField
+import SearchField from './SearchField'
+export { InputField, SearchField }

@@ -4,6 +4,7 @@ import { LibraryBig, BookPlus, Trash2, Search } from 'lucide-react'
 
 import SideBar, { LinkOption } from '../components/SideBar'
 import StoryCard from './components/StoryCard'
+import { SearchField } from '../components/InputField'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 
@@ -15,8 +16,7 @@ export default async function HomePage() {
         selectedIndex={0}
         header={
           <>
-            <Search size={16} />
-            <div className='py-1 text-gray-400 text-sm'>Pesquisar</div>
+            <SearchField></SearchField>
           </>
         }
       >

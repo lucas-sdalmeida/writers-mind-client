@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 
 import SideBar, { LinkOption } from '../../components/SideBar'
-import InputField from '../../components/InputField'
+import { InputField } from '../../components/InputField'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
