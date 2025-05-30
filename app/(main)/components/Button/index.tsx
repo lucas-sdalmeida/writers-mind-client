@@ -1,2 +1,3 @@
 import ConfirmButton from './ConfirmButton'
-export { ConfirmButton }
+import DangerButton from './DangerButton'
+export { ConfirmButton, DangerButton }
