@@ -9,6 +9,7 @@ import {
 
 import SideBar, { LinkOption } from '../../components/SideBar'
 import { InputField } from '../../components/InputField'
+import { ConfirmButton } from '../../components/Button'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
@@ -79,9 +80,7 @@ export default function CreateStoryPage() {
           </div>
 
           <div className='w-full p-2 flex justify-end items-center gap-3'>
-            <button className='px-3 py-1 rounded-xl bg-[#10c3e2] hover:bg-cyan-600 text-white hover:underline'>
-              Salvar
-            </button>
+            <ConfirmButton>Salvar</ConfirmButton>
 
             <button className='px-3 py-1 rounded-xl bg-[#e21010] hover:bg-[#a21010] text-white hover:underline'>
               Cancelar
