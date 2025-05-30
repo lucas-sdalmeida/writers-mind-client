@@ -14,11 +14,7 @@ export default async function HomePage() {
       <SideBar
         className='col-start-1 col-span-2'
         selectedIndex={0}
-        header={
-          <>
-            <SearchField></SearchField>
-          </>
-        }
+        header={<SearchField />}
       >
         <LinkOption href='#' icon={<LibraryBig size={16} />}>
           Salão das Histórias
