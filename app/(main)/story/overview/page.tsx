@@ -1,17 +1,8 @@
-import { Inter } from 'next/font/google'
-
-import {
-  LibraryBig,
-  BookPlus,
-  Image as ImageIcon,
-  PenSquare,
-} from 'lucide-react'
+import { LibraryBig, BookPlus, Image as ImageIcon } from 'lucide-react'
 
 import SideBar, { LinkOption } from '../../components/SideBar'
 import { EditableText, InputField, TextArea } from '../../components/InputField'
 import { ConfirmButton, DangerButton } from '../../components/Button'
-
-const inter = Inter({ weight: '600', subsets: ['latin'] })
 
 export default function CreateStoryPage() {
   return (
