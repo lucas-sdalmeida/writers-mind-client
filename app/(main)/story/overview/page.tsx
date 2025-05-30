@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 
 import SideBar, { LinkOption } from '../../components/SideBar'
-import { InputField, TextArea } from '../../components/InputField'
+import { EditableText, InputField, TextArea } from '../../components/InputField'
 import { ConfirmButton, DangerButton } from '../../components/Button'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
@@ -28,16 +28,7 @@ export default function CreateStoryPage() {
       <form className='col-start-3 col-span-10 w-full h-full flex gap-2'>
         <div className='flex-1 px-6 flex flex-col gap-3'>
           <div className='w-full mb-6 px-2 pt-2 pb-1 border-b-[1px] border-b-[#10c3e2]'>
-            <label className={`${inter.className} flex items-start gap-1`}>
-              <input
-                className='min-w-72 w-auto rounded-md bg-transparent outline-none placeholder-gray-400'
-                type='text'
-                name='title'
-                placeholder='Minha História...'
-              />
-
-              <PenSquare size={14} />
-            </label>
+            <EditableText name='title' placeholder='Minha História...' />
           </div>
 
           <div className='flex-1 px-3 flex flex-col gap-3'>
