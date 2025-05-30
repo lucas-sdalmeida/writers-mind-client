@@ -14,7 +14,7 @@ export default function InputField({
     <label className={`${quicksand.className} flex items-center gap-3`}>
       {label && <span>{label}</span>}
       <input
-        className='flex-1 px-2 py-1 rounded-lg shadow-md shadow-gray-300 outline-gray-400 outline-1 bg-transparent placeholder-gray-400'
+        className='flex-1 px-2 py-1 rounded-lg border-[1px] border-gray-300 outline-gray-400 outline-1 bg-transparent placeholder-gray-400'
         type={type ?? 'text'}
         name={name}
         placeholder={placeholder}
