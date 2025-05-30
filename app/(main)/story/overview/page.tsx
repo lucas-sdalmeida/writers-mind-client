@@ -1,8 +1,7 @@
-import { LibraryBig, BookPlus, Image as ImageIcon } from 'lucide-react'
+import { LibraryBig, BookPlus } from 'lucide-react'
 
 import SideBar, { LinkOption } from '../../components/SideBar'
-import { EditableText, InputField, TextArea } from '../../components/InputField'
-import { ConfirmButton, DangerButton } from '../../components/Button'
+import StoryOverviewForm from '../components/StoryOverviewForm'
 
 export default function CreateStoryPage() {
   return (
@@ -16,63 +15,7 @@ export default function CreateStoryPage() {
         </LinkOption>
       </SideBar>
 
-      <form className='col-start-3 col-span-10 w-full h-full flex gap-2'>
-        <div className='flex-1 px-6 flex flex-col gap-3'>
-          <div className='w-full mb-6 px-2 pt-2 pb-1 border-b-[1px] border-b-[#10c3e2]'>
-            <EditableText name='title' placeholder='Minha História...' />
-          </div>
-
-          <div className='flex-1 px-3 flex flex-col gap-3'>
-            <InputField
-              label='Tema:'
-              name='themes'
-              placeholder='Sobre o que é a sua história?'
-            />
-
-            <InputField
-              label='Objetivos:'
-              name='objectives'
-              placeholder='Quais seus objectivos ao escrever essa história?'
-            />
-
-            <InputField
-              label='Trama principal:'
-              name='mainPlot'
-              placeholder='Qual a jornada principal? O que os protagonistas buscam?'
-            />
-
-            <InputField
-              label='Gêneros:'
-              name='genres'
-              placeholder='Em quais gêneros você acredita que sua história se encaixa?'
-            />
-
-            <InputField
-              label='Ambientação:'
-              name='setting'
-              placeholder='Qual o tipo de mundo no qual sua história se passa?'
-            />
-
-            <TextArea
-              className='flex-1 w-full'
-              name='summary'
-              placeholder='Descreva um pouco sua história...'
-            />
-          </div>
-
-          <div className='w-full p-2 flex justify-end items-center gap-3'>
-            <ConfirmButton>Salvar</ConfirmButton>
-            <DangerButton>Cancelar</DangerButton>
-          </div>
-        </div>
-
-        <div className='w-1/3 h-full hover:bg-[#d9d9d9] rounded-3xl group duration-500 flex justify-center items-center'>
-          <ImageIcon
-            size={48}
-            className='text-gray-400 group-hover:text-[#707070]'
-          />
-        </div>
-      </form>
+      <StoryOverviewForm className='col-start-3 col-span-10' />
     </div>
   )
 }
