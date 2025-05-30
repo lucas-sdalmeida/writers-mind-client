@@ -1,3 +1,4 @@
 import InputField from './InputField'
 import SearchField from './SearchField'
-export { InputField, SearchField }
+import TextArea from './TextArea'
+export { InputField, SearchField, TextArea }

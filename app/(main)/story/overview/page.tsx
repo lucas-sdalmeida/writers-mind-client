@@ -1,4 +1,4 @@
-import { Inter, Quicksand } from 'next/font/google'
+import { Inter } from 'next/font/google'
 
 import {
   LibraryBig,
@@ -8,11 +8,10 @@ import {
 } from 'lucide-react'
 
 import SideBar, { LinkOption } from '../../components/SideBar'
-import { InputField } from '../../components/InputField'
+import { InputField, TextArea } from '../../components/InputField'
 import { ConfirmButton, DangerButton } from '../../components/Button'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
-const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
 export default function CreateStoryPage() {
   return (
@@ -72,11 +71,11 @@ export default function CreateStoryPage() {
               placeholder='Qual o tipo de mundo no qual sua história se passa?'
             />
 
-            <textarea
-              className={`${quicksand.className} flex-1 w-full px-2 py-1 rounded-lg border-[1px] border-gray-300 outline-1 outline-gray-400 bg-transparent placeholder-gray-400`}
+            <TextArea
+              className='flex-1 w-full'
               name='summary'
               placeholder='Descreva um pouco sua história...'
-            ></textarea>
+            />
           </div>
 
           <div className='w-full p-2 flex justify-end items-center gap-3'>
