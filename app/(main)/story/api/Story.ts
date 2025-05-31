@@ -1,7 +1,7 @@
-type Story = {
+export type Story = {
   id: string
   title: string
-  coverImage?: string
+  coverImageUri?: string
   objectives?: string
   themes?: string
   mainPlot?: string
@@ -9,4 +9,3 @@ type Story = {
   genres?: string
   summary?: string
 }
-export default Story

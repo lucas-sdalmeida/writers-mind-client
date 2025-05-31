@@ -10,7 +10,7 @@ import {
   Image as ImageIcon,
 } from 'lucide-react'
 
-import Story from '../../api/Story'
+import type { Story } from '../../api/story'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 
@@ -22,9 +22,9 @@ export default function StoryCard({ story }: { story: Story }) {
           href={`/story/${story.id}/time-line`}
           className='w-full h-full no-underline flex justify-center items-center'
         >
-          {story.coverImage ? (
+          {story.coverImageUri ? (
             <Image
-              src={story.coverImage}
+              src={story.coverImageUri}
               alt={`Imagem de capa da história ${story.title}!`}
               width={240}
               height={144}

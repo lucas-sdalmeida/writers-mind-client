@@ -4,7 +4,7 @@ import { useState } from 'react'
 import style from './StoryForm.module.css'
 import { useRouter } from 'next/navigation'
 import { updateStory } from '../../api/update-story'
-import Story from '@/app/(main)/story/api/Story'
+import Story from '@/app/(main)/story/api/story'
 
 export default function StoryForm({ story }: Readonly<Props>) {
   const router = useRouter()
