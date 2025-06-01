@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 import { ImageIcon } from 'lucide-react'
 
 import {
@@ -8,8 +10,9 @@ import {
   TextArea,
 } from '@/app/(main)/components/InputField'
 import { ConfirmButton, DangerButton } from '@/app/(main)/components/Button'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { postStory } from '../../api/post-story'
 
 export default function StoryOverviewForm({
   className,
@@ -21,10 +24,16 @@ export default function StoryOverviewForm({
     setEditingStory({ ...editingStory, [key]: value })
   }
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    await postStory(editingStory)
+    router.push('/story')
+  }
+
   return (
     <form
       className={`${className} w-full h-full flex gap-2`}
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit}
     >
       <div className='flex-1 px-6 flex flex-col gap-3'>
         <div className='w-full mb-6 px-2 pt-2 pb-1 border-b-[1px] border-b-[#10c3e2]'>
@@ -90,7 +99,9 @@ export default function StoryOverviewForm({
 
         <div className='w-full p-2 flex justify-end items-center gap-3'>
           <ConfirmButton>Salvar</ConfirmButton>
-          <DangerButton onClick={router.back}>Cancelar</DangerButton>
+          <Link href='/story'>
+            <DangerButton>Cancelar</DangerButton>
+          </Link>
         </div>
       </div>
 
