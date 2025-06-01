@@ -1,22 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import { useTimeLineContext } from '../../context/TimeLineContext'
 
 export default function TimeLine({ className }: Readonly<Props>) {
-  const [timeMarks, setTimeMarks] = useState([] as MarkPoint[])
+  const { timeLine, setTimeLine } = useTimeLineContext()
+
   const [lineHover, setLineHover] = useState(undefined as number | undefined)
   const [newPointPosition, setNewPointPosition] = useState(0)
-  const [zeroOffset, setZeroOffset] = useState(0)
 
   const handleNewMark = () => {
-    const offset = !timeMarks.length ? newPointPosition : zeroOffset
-    if (!timeMarks.length) setZeroOffset(newPointPosition)
-
-    timeMarks.push({
-      absolutePosition: newPointPosition - offset,
-      actualPosition: newPointPosition,
-    })
-    setTimeMarks(timeMarks)
+    timeLine.addPoint(0, newPointPosition)
+    setTimeLine(timeLine)
   }
 
   return (
@@ -35,11 +30,11 @@ export default function TimeLine({ className }: Readonly<Props>) {
           style={{ left: `calc(${newPointPosition}px - .25rem)` }}
         ></div>
 
-        {timeMarks.map((mark, i) => (
+        {timeLine.lines[0].points.map((point, i) => (
           <div
             key={i}
             className='size-2 rounded-full bg-[#10c3e2] absolute z-10'
-            style={{ left: `calc(${mark.actualPosition}px - .25rem)` }}
+            style={{ left: `calc(${point.actualPosition}px - .25rem)` }}
           ></div>
         ))}
       </div>
@@ -50,9 +45,4 @@ export default function TimeLine({ className }: Readonly<Props>) {
 type Props = {
   story: { id: string; title: string }
   className?: string
-}
-
-type MarkPoint = {
-  absolutePosition: number
-  actualPosition: number
 }
