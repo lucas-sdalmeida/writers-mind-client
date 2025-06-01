@@ -6,10 +6,13 @@ import { LibraryBig, BookPlus, Trash2, Plus } from 'lucide-react'
 import SideBar, { LinkOption } from '../components/SideBar'
 import StoryCard from './components/StoryCard'
 import { SearchField } from '../components/InputField'
+import { getAllStories } from './api'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 
 export default async function HomePage() {
+  const stories = await getAllStories()
+
   return (
     <div className='w-full h-full px-8 pt-10 pb-6 grid grid-cols-12 grid-rows-1'>
       <SideBar
@@ -38,7 +41,9 @@ export default async function HomePage() {
         </header>
 
         <div className='flex-1 w-full px-1 py-4 flex gap-3 flex-wrap overflow-y-auto'>
-          <StoryCard story={{ id: '1', title: 'História A' }} />
+          {stories.map((s) => (
+            <StoryCard key={s.id} story={s} />
+          ))}
         </div>
       </section>
     </div>
