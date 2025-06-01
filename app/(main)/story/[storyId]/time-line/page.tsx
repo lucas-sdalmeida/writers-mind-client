@@ -8,22 +8,28 @@ import {
   Waypoints,
 } from 'lucide-react'
 
+import TimeLine from './components/TimeLine'
+import { getOneStory } from '../api'
+
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 
 export default async function TimeLinePage({
   params,
 }: Readonly<{ params: Promise<{ storyId: string }> }>) {
   const { storyId } = await params
+  const story = await getOneStory(storyId)
 
   return (
     <div className='w-full h-full relative flex justify-start items-center'>
       <div className='w-full flex justify-center absolute z-10 top-4'>
         <h2 className={`${inter.className} text-lg hover:underline`}>
-          <Link href={`/story/${storyId}/overview`}>História</Link>
+          <Link href={`/story/${storyId}/overview`}>{story.title}</Link>
         </h2>
       </div>
 
-      <div className='w-full h-full relative z-0'></div>
+      <div className='w-full h-full relative z-0'>
+        <TimeLine story={story} className='w-full h-full' />
+      </div>
 
       <div className='w-56 h-5/6 ml-8 px-3 rounded-2xl shadow-lg bg-white absolute z-10 flex flex-col'>
         <div className='border-b-[1px] border-b-gray-300 flex justify-evenly items-center'>
