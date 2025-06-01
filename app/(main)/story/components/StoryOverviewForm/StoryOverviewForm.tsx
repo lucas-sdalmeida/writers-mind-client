@@ -13,11 +13,16 @@ import { ConfirmButton, DangerButton } from '@/app/(main)/components/Button'
 import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { postStory } from '../../api/post-story'
+import type { Story } from '../../api'
+import { updateStory } from '../../[storyId]/api'
 
 export default function StoryOverviewForm({
+  story,
   className,
-}: Readonly<{ className?: string }>) {
-  const [editingStory, setEditingStory] = useState({} as EditingStory)
+}: Readonly<{ story?: Story; className?: string }>) {
+  const [editingStory, setEditingStory] = useState(
+    story || ({} as EditingStory),
+  )
   const router = useRouter()
 
   const handleChangeValue = (key: string, value: string) => {
@@ -26,8 +31,15 @@ export default function StoryOverviewForm({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await postStory(editingStory)
-    router.push('/story')
+
+    if (story) {
+      await updateStory({ ...story, ...editingStory })
+      router.push(`/story/${story.id}/time-line`)
+      return
+    }
+
+    const id = await postStory(editingStory)
+    router.push(`/story/${id}/time-line`)
   }
 
   return (
@@ -99,7 +111,7 @@ export default function StoryOverviewForm({
 
         <div className='w-full p-2 flex justify-end items-center gap-3'>
           <ConfirmButton>Salvar</ConfirmButton>
-          <Link href='/story'>
+          <Link href={story ? `/story/${story.id}/time-line` : '/story'}>
             <DangerButton>Cancelar</DangerButton>
           </Link>
         </div>
