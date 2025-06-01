@@ -1,4 +1,9 @@
-import { LibraryBig } from 'lucide-react'
+import {
+  LibraryBig,
+  GitCommitHorizontal,
+  UsersRound,
+  Waypoints,
+} from 'lucide-react'
 
 import SideBar, { LinkOption } from '@/app/(main)/components/SideBar'
 import StoryOverviewForm from '../../components/StoryOverviewForm'
@@ -13,6 +18,24 @@ export default async function StoryOverviewPage({ params }: Readonly<Props>) {
       <SideBar selectedIndex={1} className='col-start-1 col-span-2'>
         <LinkOption href='/story' icon={<LibraryBig size={16} />}>
           Salão das Histórias
+        </LinkOption>
+        <LinkOption
+          href={`/story/${storyId}/time-line`}
+          icon={<GitCommitHorizontal size={16} />}
+        >
+          Linha do Tempo
+        </LinkOption>
+        <LinkOption
+          href={`/story/${storyId}/character`}
+          icon={<UsersRound size={16} />}
+        >
+          Salão dos Heróis
+        </LinkOption>
+        <LinkOption
+          href={`/story/${storyId}/idea`}
+          icon={<Waypoints size={16} />}
+        >
+          Mapa de Ideias
         </LinkOption>
       </SideBar>
 
