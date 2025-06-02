@@ -39,12 +39,18 @@ export default function CharacterDraftPage() {
         </div>
       </div>
 
-      <div className='w-1/3 h-full rounded-2xl flex justify-center items-center group hover:bg-[#d9d9d9] duration-500'>
+      <label className='w-1/3 h-full flex justify-center items-center group hover:bg-[#d9d9d9] hover:shadow-[0_0_8px_8px_#d9d9d9] duration-500'>
         <ImageIcon
           className='text-gray-400 group-hover:text-[#707070]'
           size={48}
         />
-      </div>
+        <input
+          className='hidden'
+          type='file'
+          name='characterDrawing'
+          accept='image/*'
+        />
+      </label>
     </form>
   )
 }
