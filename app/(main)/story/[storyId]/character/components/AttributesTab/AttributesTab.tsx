@@ -42,16 +42,12 @@ export default function AttributesTab({
       <h3 className='w-full my-2 text-sm text-center'>Características</h3>
 
       <ul className='w-full h-fit max-h-[60dvh] mb-4 list-none overflow-y-auto'>
-        <NameAttribute
-          key={-1}
-          character={character}
-          setCharacter={setCharacter}
-        />
+        <NameAttribute character={character} setCharacter={setCharacter} />
 
         {character.attributes.map((a, i) => {
           return (
             <AttributeItem
-              index={i}
+              key={i}
               attribute={a}
               onChangeName={handleOnChangeName}
               onChangeValue={handleOnChangeValue}
@@ -106,7 +102,6 @@ function NameAttribute({ character, setCharacter }: Props) {
 }
 
 function AttributeItem({
-  index,
   attribute,
   onChangeName,
   onChangeValue,
@@ -115,7 +110,7 @@ function AttributeItem({
   const { attributeName, value } = attribute
 
   return (
-    <li key={index} className='w-full mb-2 last:mb-0'>
+    <li className='w-full mb-2 last:mb-0'>
       <div className='w-full grid grid-cols-6 grid-rows-1 gap-3'>
         <input
           className='col-span-2 px-2 border-b-[1px] border-b-[#10c3e2] outline-[1px] outline-gray-400 bg-transparent'
@@ -144,7 +139,6 @@ function AttributeItem({
 }
 
 type AttributeItemProps = {
-  index: number
   attribute: { attributeName: string; value: string }
   onChangeName: (currentName: string, newName: string) => void
   onChangeValue: (attributeName: string, value: string) => void
