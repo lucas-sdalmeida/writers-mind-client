@@ -2,16 +2,17 @@
 
 import { useState } from 'react'
 import { useTimeLineContext } from '../../context/TimeLineContext'
+import { useRouter } from 'next/navigation'
 
-export default function TimeLine({ className }: Readonly<Props>) {
-  const { timeLine, setTimeLine } = useTimeLineContext()
+export default function TimeLine({ story, className }: Readonly<Props>) {
+  const router = useRouter()
+  const { timeLine } = useTimeLineContext()
 
   const [lineHover, setLineHover] = useState(undefined as number | undefined)
   const [newPointPosition, setNewPointPosition] = useState(0)
 
   const handleNewMark = () => {
-    timeLine.addPoint(0, newPointPosition)
-    setTimeLine(timeLine)
+    router.push(`/story/${story.id}/time-line/fragment`)
   }
 
   return (
