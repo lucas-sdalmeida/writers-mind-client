@@ -38,11 +38,15 @@ export default function AttributesTab({
   }
 
   return (
-    <div className='w-full h-full overflow-y-auto'>
+    <div className='w-full h-full'>
       <h3 className='w-full my-2 text-sm text-center'>Características</h3>
 
-      <ul className='w-full mb-4 list-none'>
-        <NameAttribute character={character} setCharacter={setCharacter} />
+      <ul className='w-full h-fit max-h-[60dvh] mb-4 list-none overflow-y-auto'>
+        <NameAttribute
+          key={-1}
+          character={character}
+          setCharacter={setCharacter}
+        />
 
         {character.attributes.map((a, i) => {
           return (
@@ -81,7 +85,7 @@ type CharacterDraft = {
 
 function NameAttribute({ character, setCharacter }: Props) {
   return (
-    <li key={-1} className='w-full mb-2 last:mb-0'>
+    <li className='w-full mb-2 last:mb-0'>
       <div className='w-full grid grid-cols-6 grid-rows-1 gap-3'>
         <input
           className='col-span-2 px-2 border-b-[1px] border-b-[#10c3e2] bg-transparent'

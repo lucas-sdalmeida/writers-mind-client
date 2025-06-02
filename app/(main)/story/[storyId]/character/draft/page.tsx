@@ -19,7 +19,7 @@ export default function CharacterDraftPage() {
 
   return (
     <form className='w-full h-full flex gap-3'>
-      <div className='flex-1 px-8 flex flex-col gap-3'>
+      <div className='flex-1 px-8 grid grid-cols-1 grid-rows-[auto_1fr_auto] gap-3'>
         <div className='w-full px-1 border-b-[1px] border-b-[#10c3e2]'>
           <EditableText
             placeholder='Me chamo...'
@@ -28,7 +28,7 @@ export default function CharacterDraftPage() {
           />
         </div>
 
-        <div className={`${quicksand.className} flex-1 w-full h-full`}>
+        <div className={`${quicksand.className} w-full h-full max-h-[60dvh]`}>
           <AttributesTab character={character} setCharacter={setCharacter} />
         </div>
 
