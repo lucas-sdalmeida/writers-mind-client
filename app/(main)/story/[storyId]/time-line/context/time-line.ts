@@ -1,31 +1,31 @@
-export default class TimeLine {
-  private offset?: number
-  lines: Line[] = [{ index: 0, name: 'linha 1', color: '#10c3e2', points: [] }]
-
-  addPoint(lineIndex: number, point: number) {
-    this.offset = this.offset ?? point
-
-    this.lines.forEach((l) => {
-      if (l.index !== lineIndex) return
-
-      l.points.push({
-        absolutePosition: point - this.offset!,
-        actualPosition: point,
-      })
-
-      return
-    })
-  }
+type TimeLine = {
+  offsetX?: number
+  addingPoint?: { line: number; x: number }
+  lineGroups: LineGroupData[]
 }
 
-type Line = {
+export type LineGroupData = {
+  title?: string
+  color?: string
+  lines: LineData[]
+}
+
+export type LineData = {
   index: number
   name: string
   color: string
   points: TimePoint[]
 }
 
-type TimePoint = {
-  absolutePosition: number
-  actualPosition: number
+export type TimePoint = {
+  id: string
+  title: string
+  type: 'excerpt' | 'chapter'
+  summary?: string
+  momentDate?: Date
+  momentTime?: Date
+  excerpts?: TimePoint[]
+  actualPosition: { line: number; x: number }
 }
+
+export default TimeLine
