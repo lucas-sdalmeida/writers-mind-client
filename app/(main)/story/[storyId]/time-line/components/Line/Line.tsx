@@ -52,6 +52,12 @@ export default function Line({ story, lineGroup, line }: Props) {
           color={line.color}
         ></LinePoint>
       ))}
+
+      <p
+        className={`${quicksand.className} text-xs text-nowrap absolute z-0 left-[99%] -translate-x-full -translate-y-2/3`}
+      >
+        {line.name}
+      </p>
     </div>
   )
 }
