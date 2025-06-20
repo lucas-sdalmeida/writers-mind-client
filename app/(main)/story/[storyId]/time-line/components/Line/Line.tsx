@@ -91,7 +91,7 @@ function LinePoint({
         onMouseLeave={() => setHover(false)}
       ></div>
       <p
-        className={`${quicksand.className} px-2 rounded-md shadow-md bg-white text-xs absolute`}
+        className={`${quicksand.className} px-2 rounded-md shadow-md bg-white text-xs absolute ${hover && 'underline'}`}
         style={{
           left: `calc(${point.actualPosition.x}px)`,
           zIndex: `${hover ? 999 : index}`,
