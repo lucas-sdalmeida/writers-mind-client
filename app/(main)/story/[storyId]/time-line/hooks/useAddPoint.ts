@@ -5,4 +5,8 @@ export function useAddPoint(): AddPointFunction {
   return (position) => setTimeLine({ ...timeLine, addingPoint: position })
 }
 
-export type AddPointFunction = (position: { line: number; x: number }) => void
+export type AddPointFunction = (position: {
+  line: number
+  x: number
+  lineGroup?: string
+}) => void
