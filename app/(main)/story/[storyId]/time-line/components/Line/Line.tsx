@@ -77,6 +77,8 @@ function LinePoint({
   point: TimePoint
   color: string
 }) {
+  const [hover, setHover] = useState(false)
+
   return (
     <>
       <div
@@ -85,14 +87,18 @@ function LinePoint({
           backgroundColor: color,
           left: `calc(${point.actualPosition.x}px - .25rem)`,
         }}
+        onMouseOver={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
       ></div>
       <p
         className={`${quicksand.className} px-2 rounded-md shadow-md bg-white text-xs absolute`}
         style={{
           left: `calc(${point.actualPosition.x}px)`,
-          zIndex: `z-${index}`,
+          zIndex: `${hover ? 999 : index}`,
           transform: 'translate(-50%, -100%)',
         }}
+        onMouseOver={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
       >
         {point.title}
       </p>
