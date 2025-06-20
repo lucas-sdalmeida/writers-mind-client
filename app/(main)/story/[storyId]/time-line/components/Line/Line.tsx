@@ -15,7 +15,6 @@ export default function Line({ story, lineGroup, line }: Props) {
   const router = useRouter()
   const addPoint = useAddPoint()
 
-  const [lineHover, setLineHover] = useState(false)
   const [newPointPosition, setNewPointPosition] = useState(0)
 
   const handleNewMark = () => {
@@ -25,11 +24,8 @@ export default function Line({ story, lineGroup, line }: Props) {
 
   return (
     <div
-      className='w-full py-4 relative flex items-center cursor-pointer'
-      onMouseOver={() => setLineHover(true)}
-      onMouseLeave={() => setLineHover(false)}
+      className='w-full py-4 relative flex items-center cursor-pointer group'
       onMouseMove={(e) => setNewPointPosition(e.clientX)}
-      onClick={handleNewMark}
     >
       <div
         className='w-full h-[.5px] relative z-0'
@@ -37,11 +33,12 @@ export default function Line({ story, lineGroup, line }: Props) {
       ></div>
 
       <div
-        className={`size-2 rounded-full absolute z-10 ${!lineHover && 'hidden'}`}
+        className={`size-2 rounded-full absolute z-10 hidden group-hover:block`}
         style={{
           backgroundColor: line.color,
           left: `calc(${newPointPosition}px - .25rem)`,
         }}
+        onClick={handleNewMark}
       ></div>
 
       {line.points.map((point, index) => (
