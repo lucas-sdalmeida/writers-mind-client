@@ -4,7 +4,7 @@ import { Quicksand } from 'next/font/google'
 import { useRouter } from 'next/navigation'
 
 import { Story } from '@/app/(main)/story/api'
-import { LineData, TimePoint } from '../../context/time-line'
+import { LineData, TimePoint } from '../../context/timeline'
 import { useAddPoint } from '../../hooks/useAddPoint'
 
 import { useState } from 'react'

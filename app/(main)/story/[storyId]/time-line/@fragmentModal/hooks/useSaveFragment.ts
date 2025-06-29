@@ -1,4 +1,4 @@
-import { TimePoint } from '../../context/time-line'
+import { TimePoint } from '../../context/timeline'
 import { useTimeLineContext } from '../../context/TimeLineContext'
 
 export function useSaveFragment(): SaveFragmentFunction {

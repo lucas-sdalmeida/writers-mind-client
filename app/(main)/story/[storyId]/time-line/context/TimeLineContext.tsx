@@ -1,7 +1,7 @@
 'use client'
 
 import { ActionDispatch, createContext, useContext, useReducer } from 'react'
-import Timeline from './time-line'
+import Timeline from './timeline'
 import { Action, timeLineReducer } from './timeline-reducer'
 
 export const TimeLineContext = createContext<TimeLineContextData | undefined>(

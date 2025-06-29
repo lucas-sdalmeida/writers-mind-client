@@ -1,5 +1,5 @@
 import { Story } from '@/app/(main)/story/api'
-import { LineData, LineGroupData } from '../../context/time-line'
+import { LineData, LineGroupData } from '../../context/timeline'
 import Line from '../Line/Line'
 
 export default function LineGroup({ story, group }: Props) {

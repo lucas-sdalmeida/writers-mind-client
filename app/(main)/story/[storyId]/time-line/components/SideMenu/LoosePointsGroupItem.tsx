@@ -2,7 +2,7 @@
 
 import { Minus } from 'lucide-react'
 
-import { LineGroupData } from '../../context/time-line'
+import { LineGroupData } from '../../context/timeline'
 
 export default function LoosePointsGroupItem({ lineGroup }: Props) {
   return (

@@ -1,5 +1,5 @@
 import type { Timeline as TimelineMetaData } from '../api/get-timeline'
-import Timeline from './time-line'
+import Timeline from './timeline'
 
 export function timeLineReducer(previous: Timeline, action: Action) {
   return new Timeline(
