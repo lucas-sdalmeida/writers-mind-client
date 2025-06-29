@@ -1,13 +1,17 @@
-import type { Timeline as TimelineMetaData } from '../api/get-timeline'
-import Timeline from './timeline'
+import type { TimelineDto } from '../api/get-timeline'
+import type Timeline from './timeline'
 
 export function timeLineReducer(previous: Timeline, action: Action) {
-  return new Timeline(
-    action.timeline.narrativeThreads.map((t) => ({ ...t, lines: [] })),
-  )
+  return initTimeline(action.timeline)
 }
 
-export type Action = {
+export type Action = InitAction
+
+function initTimeline(timeline: TimelineDto) {
+  return { narrativeThreads: timeline.narrativeThreads }
+}
+
+export type InitAction = {
   type: 'init'
-  timeline: TimelineMetaData
+  timeline: TimelineDto
 }

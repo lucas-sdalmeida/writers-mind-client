@@ -20,7 +20,9 @@ export function useTimelineContext() {
 export default function TimeLineContextProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const [timeline, dispatch] = useReducer(timeLineReducer, new Timeline())
+  const [timeline, dispatch] = useReducer(timeLineReducer, {
+    narrativeThreads: [],
+  })
 
   return (
     <TimeLineContext.Provider value={{ timeline, dispatch }}>

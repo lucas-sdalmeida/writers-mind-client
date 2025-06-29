@@ -1,11 +1,38 @@
+import type { NarrativeThread } from '../context/timeline'
+
 export async function getTimeline(storyId: string) {
   return {
     story: { id: storyId, title: 'Minha História' },
-    narrativeThreads: [],
-  } as Timeline
+    narrativeThreads: [
+      {
+        lines: [
+          {
+            index: 0,
+            preferences: { name: 'linha 1', color: '#10c3e2' },
+            points: [],
+          },
+          {
+            index: 1,
+            preferences: { name: 'linha 2', color: '#10c3e2' },
+            points: [],
+          },
+        ],
+      },
+      {
+        volumeId: 'a',
+        lines: [
+          {
+            index: 0,
+            preferences: { name: 'linha 1', color: '#10c3e2' },
+            points: [],
+          },
+        ],
+      },
+    ],
+  } as TimelineDto
 }
 
-export type Timeline = {
+export type TimelineDto = {
   story: { id: string; title: string }
-  narrativeThreads: { volumeId?: string; characterId?: string; title: string }[]
+  narrativeThreads: NarrativeThread[]
 }

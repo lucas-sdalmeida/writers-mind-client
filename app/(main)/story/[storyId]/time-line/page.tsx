@@ -7,5 +7,5 @@ export default async function TimeLinePage({
   const { storyId } = await params
   const timeline = await getTimeline(storyId)
 
-  return <Timeline timeline={timeline} className='w-full h-full' />
+  return <Timeline dto={timeline} className='w-full h-full' />
 }

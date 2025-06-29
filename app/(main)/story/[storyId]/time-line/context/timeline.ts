@@ -1,16 +1,8 @@
-export default class Timeline {
+import NarrativeThread from '../components/NarrativeThread'
+
+export type Timeline = {
   offset?: number
-  narrativeThreads: NarrativeThread[] = []
-
-  constructor(threads?: NarrativeThread[]) {
-    if (threads) threads.forEach((t) => this.narrativeThreads.push(t))
-
-    const line = {
-      index: 0,
-      preferences: { name: 'linha 1', color: '#10c3e2' },
-    }
-    this.narrativeThreads.push({ lines: [line] })
-  }
+  narrativeThreads: NarrativeThread[]
 }
 
 export type NarrativeThread = {
@@ -23,6 +15,7 @@ export type NarrativeThread = {
 export type Line = {
   index: number
   preferences: { name: string; color: string }
+  points: Point[]
 }
 
 export type Point = {
@@ -32,3 +25,5 @@ export type Point = {
   title: string
   actualPosition: { line: number; x: number }
 }
+
+export default Timeline
