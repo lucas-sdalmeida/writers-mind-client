@@ -9,12 +9,32 @@ export async function getTimeline(storyId: string) {
           {
             index: 0,
             preferences: { name: 'linha 1', color: '#10c3e2' },
-            points: [],
+            points: [
+              {
+                id: 'abc',
+                title: 'Ponto A',
+                type: 'excerpt',
+                actualPosition: { line: 0, x: 5 },
+              },
+              {
+                id: 'abcd',
+                title: 'Ponto B',
+                type: 'excerpt',
+                actualPosition: { line: 0, x: 6 },
+              },
+            ],
           },
           {
             index: 1,
-            preferences: { name: 'linha 2', color: '#10c3e2' },
-            points: [],
+            preferences: { name: 'linha 2', color: '#e21010' },
+            points: [
+              {
+                id: 'abcde',
+                title: 'Ponto C',
+                type: 'excerpt',
+                actualPosition: { line: 0, x: 5.1 },
+              },
+            ],
           },
         ],
       },
@@ -23,8 +43,24 @@ export async function getTimeline(storyId: string) {
         lines: [
           {
             index: 0,
-            preferences: { name: 'linha 1', color: '#10c3e2' },
-            points: [],
+            preferences: { name: 'linha 1', color: '#e28010' },
+            points: [
+              {
+                id: 'abcde',
+                volumeId: 'a',
+                title: 'Capitulo 1',
+                type: 'chapter',
+                actualPosition: { line: 0, x: 1, width: 3 },
+              },
+              {
+                id: 'abcdf',
+                volumeId: 'a',
+                chapterId: 'abcde',
+                title: 'Ponto D',
+                type: 'excerpt',
+                actualPosition: { line: 0, x: 1.5 },
+              },
+            ],
           },
         ],
       },

@@ -22,8 +22,9 @@ export type Point = {
   id: string
   volumeId?: string
   chapterId?: string
+  type: 'excerpt' | 'chapter'
   title: string
-  actualPosition: { line: number; x: number }
+  actualPosition: { line: number; x: number; width?: number }
 }
 
 export default Timeline

@@ -1,2 +1,2 @@
-import Line from './Line'
-export default Line
+import LineData from './Line'
+export default LineData
