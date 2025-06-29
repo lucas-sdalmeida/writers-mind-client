@@ -22,7 +22,9 @@ export default async function TimeLineLayout({
           </h2>
         </div>
 
-        <div className='w-full h-full relative z-0'>{children}</div>
+        <div className='w-full h-full relative z-0 overflow-hidden'>
+          {children}
+        </div>
 
         <SideMenu storyId={storyId} />
 
