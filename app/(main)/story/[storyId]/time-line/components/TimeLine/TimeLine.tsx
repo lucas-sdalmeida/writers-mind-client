@@ -12,8 +12,6 @@ export default function Timeline({ dto, className }: Readonly<Props>) {
     dispatch({ type: 'init', timeline: dto })
   }, [dto, dispatch])
 
-  console.log('Timeline rendered')
-
   return (
     <div className={`${className} w-full flex flex-col justify-center gap-8`}>
       {timeline.narrativeThreads.map((t, i) => {

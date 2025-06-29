@@ -1,18 +1,12 @@
 import { memo } from 'react'
 import { NarrativeThread as NarrativeThreadData } from '../../context/timeline'
+import Line from '../Line'
 
 function NarrativeThread({ thread }: Readonly<Props>) {
-  console.log(
-    'NarrativeThread: ' +
-      (thread.volumeId ?? thread.characterId ?? 'unbounded'),
-  )
-
   return (
     <div className='w-full'>
       {thread.lines.map((l) => (
-        <div key={l.index} className='w-full mb-2 last:mb-0 text-center'>
-          {l.preferences.name}
-        </div>
+        <Line key={l.index} line={l} />
       ))}
     </div>
   )
