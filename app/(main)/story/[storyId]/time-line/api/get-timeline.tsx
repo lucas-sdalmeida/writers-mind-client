@@ -1,13 +1,11 @@
 export async function getTimeline(storyId: string) {
   return {
     story: { id: storyId, title: 'Minha História' },
-    volumes: [],
-    biographies: [],
+    narrativeThreads: [],
   } as Timeline
 }
 
 export type Timeline = {
   story: { id: string; title: string }
-  volumes: string[]
-  biographies: string[]
+  narrativeThreads: { volumeId?: string; characterId?: string; title: string }[]
 }

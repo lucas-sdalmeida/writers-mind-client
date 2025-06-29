@@ -1,29 +1,29 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
-import TimeLine from './time-line'
+import { ActionDispatch, createContext, useContext, useReducer } from 'react'
+import Timeline from './time-line'
+import { Action, timeLineReducer } from './timeline-reducer'
 
 export const TimeLineContext = createContext<TimeLineContextData | undefined>(
   undefined,
 )
 
 type TimeLineContextData = {
-  timeLine: TimeLine
-  setTimeLine: (value: TimeLine) => void
+  timeline: Timeline
+  dispatch: ActionDispatch<[action: Action]>
 }
 
-export function useTimeLineContext() {
+export function useTimelineContext() {
   return useContext(TimeLineContext)!
 }
 
 export default function TimeLineContextProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const [value, setValue] = useState<TimeLine>({})
-  const setTimeLine = (value: TimeLine) => setValue(value)
+  const [timeline, dispatch] = useReducer(timeLineReducer, new Timeline())
 
   return (
-    <TimeLineContext.Provider value={{ timeLine: value, setTimeLine }}>
+    <TimeLineContext.Provider value={{ timeline, dispatch }}>
       {children}
     </TimeLineContext.Provider>
   )
