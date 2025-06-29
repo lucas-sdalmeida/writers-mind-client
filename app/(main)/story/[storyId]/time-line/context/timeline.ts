@@ -21,6 +21,7 @@ export type Line = {
 export type Point = {
   id: string
   volumeId?: string
+  characterId?: string
   chapterId?: string
   type: 'excerpt' | 'chapter'
   title: string

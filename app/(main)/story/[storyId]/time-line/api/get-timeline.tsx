@@ -32,7 +32,7 @@ export async function getTimeline(storyId: string) {
                 id: 'abcde',
                 title: 'Ponto C',
                 type: 'excerpt',
-                actualPosition: { line: 0, x: 5.1 },
+                actualPosition: { line: 1, x: 5.1 },
               },
             ],
           },
@@ -46,16 +46,16 @@ export async function getTimeline(storyId: string) {
             preferences: { name: 'linha 1', color: '#e28010' },
             points: [
               {
-                id: 'abcde',
+                id: 'abcdef',
                 volumeId: 'a',
                 title: 'Capitulo 1',
                 type: 'chapter',
                 actualPosition: { line: 0, x: 1, width: 3 },
               },
               {
-                id: 'abcdf',
+                id: 'abcdefg',
                 volumeId: 'a',
-                chapterId: 'abcde',
+                chapterId: 'abcdef',
                 title: 'Ponto D',
                 type: 'excerpt',
                 actualPosition: { line: 0, x: 1.5 },

@@ -6,7 +6,12 @@ function NarrativeThread({ thread }: Readonly<Props>) {
   return (
     <div className='w-full'>
       {thread.lines.map((l) => (
-        <Line key={l.index} line={l} />
+        <Line
+          key={l.index}
+          volumeId={thread.volumeId}
+          characterId={thread.characterId}
+          line={l}
+        />
       ))}
     </div>
   )
