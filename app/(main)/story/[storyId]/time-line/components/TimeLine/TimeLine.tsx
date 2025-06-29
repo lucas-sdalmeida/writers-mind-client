@@ -1,10 +1,12 @@
 'use client'
 
-export default function TimeLine({ className }: Readonly<Props>) {
+import type { Timeline } from '../../api/get-timeline'
+
+export default function Timeline({ className }: Readonly<Props>) {
   return <div className={`${className} flex items-center`}></div>
 }
 
 type Props = {
-  story: { id: string; title: string }
+  timeline: Timeline
   className?: string
 }

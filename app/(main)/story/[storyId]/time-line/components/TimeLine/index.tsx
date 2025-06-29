@@ -1,2 +1,2 @@
-import TimeLine from './TimeLine'
-export default TimeLine
+import Timeline from './TimeLine'
+export default Timeline

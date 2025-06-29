@@ -1,11 +1,11 @@
-import TimeLine from './components/TimeLine'
-import { getOneStory } from '../api'
+import Timeline from './components/Timeline'
+import { getTimeline } from './api/get-timeline'
 
 export default async function TimeLinePage({
   params,
 }: Readonly<{ params: Promise<{ storyId: string }> }>) {
   const { storyId } = await params
-  const story = await getOneStory(storyId)
+  const timeline = await getTimeline(storyId)
 
-  return <TimeLine story={story} className='w-full h-full' />
+  return <Timeline timeline={timeline} className='w-full h-full' />
 }
