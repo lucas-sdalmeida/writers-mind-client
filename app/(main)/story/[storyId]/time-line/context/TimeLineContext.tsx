@@ -19,13 +19,7 @@ export function useTimeLineContext() {
 export default function TimeLineContextProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const looseLineGroup = {
-    lines: [{ index: 0, name: 'line 1', color: '#10c3e2', points: [] }],
-  }
-
-  const [value, setValue] = useState<TimeLine>({
-    lineGroups: [looseLineGroup],
-  })
+  const [value, setValue] = useState<TimeLine>({})
   const setTimeLine = (value: TimeLine) => setValue(value)
 
   return (

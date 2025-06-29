@@ -1,18 +1,7 @@
 'use client'
 
-import { useTimeLineContext } from '../../context/TimeLineContext'
-import LineGroup from '../LineGroup'
-
-export default function TimeLine({ story, className }: Readonly<Props>) {
-  const { timeLine } = useTimeLineContext()
-
-  return (
-    <div className={`${className} flex items-center`}>
-      {timeLine.lineGroups.map((group, index) => (
-        <LineGroup key={index} story={story} group={group} />
-      ))}
-    </div>
-  )
+export default function TimeLine({ className }: Readonly<Props>) {
+  return <div className={`${className} flex items-center`}></div>
 }
 
 type Props = {
