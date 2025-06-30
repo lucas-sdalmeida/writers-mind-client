@@ -5,6 +5,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useTimelineContext } from '../../context/TimeLineContext'
 import { useUnitsInPx } from '../../hooks/useUnitsInPx'
+import { useKeyDown } from '../../hooks/useKeyDown'
+import { useKeyUp } from '../../hooks/useKeyUp'
 
 export default function PointCursor({
   storyId,
@@ -18,7 +20,11 @@ export default function PointCursor({
   const elementRef = useRef(null as HTMLDivElement | null)
 
   const [newPointPosition, setNewPointPosition] = useState(0)
+  const [controlPressed, setControlPressed] = useState(false)
   const { addingPointData } = useTimelineContext()
+
+  useKeyDown(['Control'], () => setControlPressed(true))
+  useKeyUp(['Control'], () => setControlPressed(false))
 
   const handleMouseMove = useCallback(
     (e: globalThis.MouseEvent) => {
@@ -49,7 +55,7 @@ export default function PointCursor({
   return (
     <div
       ref={elementRef}
-      className='size-2 rounded-full absolute z-10 -translate-x-1/2 hidden group-hover:block'
+      className={`size-2 rounded-full absolute z-10 -translate-x-1/2 hidden ${!controlPressed && 'group-hover:block'}`}
       style={{
         backgroundColor: color,
         left: newPointPosition,
