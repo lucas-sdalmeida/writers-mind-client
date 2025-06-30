@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Inter } from 'next/font/google'
 
 import SideMenu from './components/SideMenu'
+import ContextMenu from './components/ContextMenu'
 import TimeLineContextProvider from './context/TimeLineContext'
 import SelectionContextProvider from './context/SelectionContext'
 
@@ -33,6 +34,8 @@ export default async function TimeLineLayout({
           <SideMenu storyId={storyId} />
 
           {fragmentModal}
+
+          <ContextMenu />
         </SelectionContextProvider>
       </TimeLineContextProvider>
     </div>

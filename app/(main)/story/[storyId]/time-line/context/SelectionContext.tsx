@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, RefObject, useContext, useRef, useState } from 'react'
 
 export const SelectionContext = createContext<SelectionContextData | undefined>(
   undefined,
@@ -8,6 +8,7 @@ export const SelectionContext = createContext<SelectionContextData | undefined>(
 
 type SelectionContextData = {
   selectionState: SelectionContextState
+  narrativeThreadOnHover: RefObject<{ threadId: string; title?: string }>
   selectLine: (narrativeThreadId: string, line: number) => void
   removeLine: (narrativeThreadId: string, line: number) => void
 }
@@ -26,6 +27,10 @@ export default function SelectionContextProvider({
   const [selectionState, setSelectionState] = useState({
     selectedLines: [],
   } as SelectionContextState)
+  const narrativeThreadRef = useRef({ threadId: '' } as {
+    threadId: string
+    title?: string
+  })
 
   const selectLine = (narrativeThreadId: string, line: number) => {
     setSelectionState({
@@ -48,7 +53,12 @@ export default function SelectionContextProvider({
 
   return (
     <SelectionContext.Provider
-      value={{ selectionState, selectLine, removeLine }}
+      value={{
+        selectionState,
+        narrativeThreadOnHover: narrativeThreadRef,
+        selectLine,
+        removeLine,
+      }}
     >
       {children}
     </SelectionContext.Provider>
