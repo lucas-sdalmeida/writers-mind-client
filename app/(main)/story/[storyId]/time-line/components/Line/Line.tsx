@@ -2,50 +2,25 @@
 
 import { Quicksand } from 'next/font/google'
 
-import { memo, MouseEvent, useState } from 'react'
+import { memo } from 'react'
 
 import type {
   Line as LineData,
   Point as PointData,
 } from '../../context/timeline'
+import PointCursor from './PointCursor'
+
 import { useDraggable, useDroppable } from '@dnd-kit/core'
-import { useRouter } from 'next/navigation'
-import { useTimelineContext } from '../../context/TimeLineContext'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
 function Line({ storyId, line, volumeId, characterId }: Readonly<Props>) {
-  const router = useRouter()
-  const unitsInPx =
-    4 * parseFloat(getComputedStyle(document.documentElement).fontSize)
-
-  const { addingPointData } = useTimelineContext()
-
-  const [newPointPosition, setNewPointPosition] = useState(0)
   const { setNodeRef } = useDroppable({
     id: `${volumeId ?? ''}.${characterId ?? ''}.${line.index}.`,
   })
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    setNewPointPosition(e.clientX)
-  }
-
-  const handleNewPoint = () => {
-    addingPointData.current = {
-      volumeId,
-      characterId,
-      position: { line: line.index, x: (newPointPosition - 350) / unitsInPx },
-    }
-
-    router.push(`/story/${storyId}/time-line/fragment`)
-  }
-
   return (
-    <div
-      ref={setNodeRef}
-      className='w-full mb-2 last:mb-0 py-4 relative group'
-      onMouseMove={handleMouseMove}
-    >
+    <div ref={setNodeRef} className='w-full mb-2 last:mb-0 py-4 relative group'>
       <div className='w-full relative z-0'>
         <div
           className='w-full h-[.5px] relative z-0'
@@ -59,14 +34,13 @@ function Line({ storyId, line, volumeId, characterId }: Readonly<Props>) {
         </p>
       </div>
 
-      <div
-        className='size-2 rounded-full absolute z-10 -translate-x-1/2 -translate-y-1/2 hidden group-hover:block'
-        style={{
-          backgroundColor: line.preferences.color,
-          left: newPointPosition,
-        }}
-        onClick={handleNewPoint}
-      ></div>
+      <PointCursor
+        storyId={storyId}
+        volumeId={volumeId}
+        characterId={characterId}
+        lineIndex={line.index}
+        color={line.preferences.color}
+      />
 
       {line.points.map((p) => (
         <Point key={p.id} line={line} point={p} offset={350} />
