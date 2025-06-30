@@ -40,6 +40,7 @@ export async function getTimeline(storyId: string) {
       },
       {
         volumeId: 'a',
+        title: 'Volume 1',
         lines: [
           {
             index: 0,

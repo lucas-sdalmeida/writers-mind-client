@@ -39,7 +39,7 @@ export default function Timeline({ dto, className }: Readonly<Props>) {
   }
 
   return (
-    <div className={`${className} w-full flex flex-col justify-center gap-8`}>
+    <div className={`${className} w-full flex flex-col justify-center gap-16`}>
       <DndContext onDragEnd={handleDragEnd}>
         {timeline.narrativeThreads.map((t, i) => {
           return <NarrativeThread key={i} thread={t} />
