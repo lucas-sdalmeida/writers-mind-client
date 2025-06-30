@@ -6,6 +6,7 @@ import {
   EditableText,
   InputField,
   TextArea,
+  SelectField,
 } from '@/app/(main)/components/InputField'
 
 import { ConfirmButton } from '@/app/(main)/components/Button'
@@ -20,24 +21,50 @@ export default function FragmentModal() {
   const router = useRouter()
 
   const { addingPointData, dispatch } = useTimelineContext()
-  const [editingFragment, setEditingFragment] = useState<EditingFragment>({})
+  const [editingFragment, setEditingFragment] = useState<EditingFragment>({
+    type: 'excerpt',
+  })
+  const [innerExcerpt, setInnerExcerpt] = useState<EditingFragment | undefined>(
+    undefined,
+  )
+
+  const handleTypeChange = (type: 'excerpt' | 'chapter') => {
+    setEditingFragment({ ...editingFragment, type })
+    setInnerExcerpt(type === 'chapter' ? { type: 'excerpt' } : undefined)
+  }
 
   const saveFragment = () => {
     router.back()
 
     const data = addingPointData.current!
+    const id = ('' + Math.random() * 1000).replace('.', '-')
 
     dispatch({
       type: 'add-point',
       point: {
-        id: '' + Math.random() + 1000,
+        id,
         volumeId: data.volumeId,
         characterId: data.characterId,
         chapterId: data.chapterId,
-        type: 'excerpt',
+        type: editingFragment.type,
         title: editingFragment.title!,
-        actualPosition: data.position,
+        actualPosition:
+          editingFragment.type === 'excerpt'
+            ? data.position
+            : { ...data.position, width: 1 },
       },
+      chapterPoint:
+        editingFragment.type === 'excerpt'
+          ? undefined
+          : {
+              id: ('' + Math.random() * 1000).replace('.', '-'),
+              volumeId: data.volumeId,
+              characterId: data.characterId,
+              chapterId: id,
+              title: innerExcerpt!.title!,
+              type: 'excerpt',
+              actualPosition: { ...data.position, x: data.position.x + 0.2 },
+            },
     })
   }
 
@@ -60,7 +87,9 @@ export default function FragmentModal() {
         <div className='col-span-2 w-full h-full px-6 pt-10 pb-4 rounded-r-3xl shadow-[-4px_0_4px_#00000040] bg-[#f6f6f6] flex flex-col gap-5'>
           <div className='w-full px-1 pb-1 mb-1 border-b-[1px] border-b-[#10c3e2]'>
             <EditableText
-              placeholder='Trecho...'
+              placeholder={
+                editingFragment.type === 'excerpt' ? 'Trecho...' : 'Capítulo...'
+              }
               value={editingFragment.title ?? ''}
               onChange={(v) =>
                 setEditingFragment({
@@ -71,7 +100,15 @@ export default function FragmentModal() {
             />
           </div>
 
-          <div className='flex-1 w-full'>
+          <div className='flex-1 w-full flex flex-col gap-3'>
+            <SelectField
+              name='type'
+              label='Tipo:'
+              value={editingFragment.type}
+              options={{ excerpt: 'Trecho', chapter: 'Capítulo' }}
+              onChange={(v) => handleTypeChange(v as 'excerpt' | 'chapter')}
+            />
+
             <InputField
               name='momentDate'
               type='date'
@@ -101,7 +138,7 @@ export default function FragmentModal() {
             <TextArea
               className='w-full mt-3'
               name='summary'
-              placeholder='Conte mais sobre esse trecho...'
+              placeholder={`Conte mais sobre esse ${editingFragment.type === 'excerpt' ? 'trecho' : 'capítulo'}...`}
               value={editingFragment.summary ?? ''}
               onChange={(v) =>
                 setEditingFragment({
@@ -111,6 +148,65 @@ export default function FragmentModal() {
               }
             />
           </div>
+
+          {editingFragment.type === 'chapter' && innerExcerpt && (
+            <>
+              <div className='w-full px-1 pb-1 mb-1 border-b-[1px] border-b-[#10c3e2]'>
+                <EditableText
+                  name='innerExcerptName'
+                  placeholder='Trecho do capítulo...'
+                  value={innerExcerpt.title ?? ''}
+                  onChange={(v) =>
+                    setInnerExcerpt({
+                      ...innerExcerpt,
+                      title: v as string,
+                    })
+                  }
+                />
+              </div>
+
+              <div className='flex-1 w-full flex flex-col gap-3'>
+                <InputField
+                  name='momentDate'
+                  type='date'
+                  label='Data:'
+                  value={innerExcerpt.momentDate ?? ''}
+                  onChange={(v) =>
+                    setInnerExcerpt({
+                      ...innerExcerpt,
+                      momentDate: v as string,
+                    })
+                  }
+                />
+
+                <InputField
+                  name='momentTime'
+                  type='time'
+                  label='Hora:'
+                  value={innerExcerpt.momentTime ?? ''}
+                  onChange={(v) =>
+                    setInnerExcerpt({
+                      ...innerExcerpt,
+                      momentTime: v as string,
+                    })
+                  }
+                />
+
+                <TextArea
+                  className='w-full mt-3'
+                  name='summary'
+                  placeholder='Conte mais sobre esse trecho...'
+                  value={innerExcerpt.summary ?? ''}
+                  onChange={(v) =>
+                    setInnerExcerpt({
+                      ...innerExcerpt,
+                      summary: v,
+                    })
+                  }
+                />
+              </div>
+            </>
+          )}
 
           <div className='w-full flex justify-center'>
             <ConfirmButton onClick={saveFragment}>Salvar</ConfirmButton>
@@ -123,6 +219,7 @@ export default function FragmentModal() {
 
 type EditingFragment = {
   title?: string
+  type: 'excerpt' | 'chapter'
   summary?: string
   momentDate?: string
   momentTime?: string

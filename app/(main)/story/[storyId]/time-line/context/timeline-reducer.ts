@@ -121,7 +121,7 @@ export type MovePointAction = {
   }
 }
 
-function addPoint(previous: Timeline, { point }: AddPointAction) {
+function addPoint(previous: Timeline, { point, chapterPoint }: AddPointAction) {
   const destinationThread = point.volumeId ?? point.characterId ?? ''
 
   const narrativeThreads = previous.narrativeThreads.map((t) => {
@@ -130,7 +130,12 @@ function addPoint(previous: Timeline, { point }: AddPointAction) {
 
     const lines = t.lines.map((l) => {
       if (l.index !== point.actualPosition.line) return l
-      return { ...l, points: [...l.points, point] }
+      return {
+        ...l,
+        points: chapterPoint
+          ? [...l.points, point, chapterPoint]
+          : [...l.points, point],
+      }
     })
 
     return { ...t, lines }
@@ -142,4 +147,5 @@ function addPoint(previous: Timeline, { point }: AddPointAction) {
 export type AddPointAction = {
   type: 'add-point'
   point: Point
+  chapterPoint?: Point
 }
