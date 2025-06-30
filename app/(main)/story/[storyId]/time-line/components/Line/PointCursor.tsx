@@ -40,7 +40,6 @@ export default function PointCursor({
   useEffect(() => {
     if (!elementRef.current) return () => {}
 
-    console.log('S')
     const parent = elementRef.current.parentElement!
     parent.addEventListener('mousemove', handleMouseMove)
 
