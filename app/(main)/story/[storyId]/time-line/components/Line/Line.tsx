@@ -8,13 +8,19 @@ import type {
   Line as LineData,
   Point as PointData,
 } from '../../context/timeline'
-import { useTimelineContext } from '../../context/TimeLineContext'
 import { useDraggable, useDroppable } from '@dnd-kit/core'
+import { useRouter } from 'next/navigation'
+import { useTimelineContext } from '../../context/TimeLineContext'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
-function Line({ line, volumeId, characterId }: Readonly<Props>) {
-  const { timeline } = useTimelineContext()
+function Line({ storyId, line, volumeId, characterId }: Readonly<Props>) {
+  const router = useRouter()
+  const unitsInPx =
+    4 * parseFloat(getComputedStyle(document.documentElement).fontSize)
+
+  const { addingPointData } = useTimelineContext()
+
   const [newPointPosition, setNewPointPosition] = useState(0)
   const { setNodeRef } = useDroppable({
     id: `${volumeId ?? ''}.${characterId ?? ''}.${line.index}.`,
@@ -22,6 +28,16 @@ function Line({ line, volumeId, characterId }: Readonly<Props>) {
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     setNewPointPosition(e.clientX)
+  }
+
+  const handleNewPoint = () => {
+    addingPointData.current = {
+      volumeId,
+      characterId,
+      position: { line: line.index, x: (newPointPosition - 350) / unitsInPx },
+    }
+
+    router.push(`/story/${storyId}/time-line/fragment`)
   }
 
   return (
@@ -49,21 +65,18 @@ function Line({ line, volumeId, characterId }: Readonly<Props>) {
           backgroundColor: line.preferences.color,
           left: newPointPosition,
         }}
+        onClick={handleNewPoint}
       ></div>
 
       {line.points.map((p) => (
-        <Point
-          key={p.id}
-          line={line}
-          point={p}
-          offset={timeline.offset ?? 350}
-        />
+        <Point key={p.id} line={line} point={p} offset={350} />
       ))}
     </div>
   )
 }
 
 type Props = {
+  storyId: string
   volumeId?: string
   characterId?: string
   line: LineData

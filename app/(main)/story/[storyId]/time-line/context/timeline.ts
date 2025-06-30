@@ -1,7 +1,7 @@
 import NarrativeThread from '../components/NarrativeThread'
 
 export type Timeline = {
-  offset?: number
+  storyId: string
   narrativeThreads: NarrativeThread[]
 }
 

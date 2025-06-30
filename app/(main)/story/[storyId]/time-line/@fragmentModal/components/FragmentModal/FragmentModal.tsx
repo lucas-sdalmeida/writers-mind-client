@@ -12,33 +12,32 @@ import { ConfirmButton } from '@/app/(main)/components/Button'
 import Modal from '../Modal'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useSaveFragment } from '../../hooks/useSaveFragment'
-import { useTimeLineContext } from '../../../context/TimeLineContext'
+import { useTimelineContext } from '../../../context/TimeLineContext'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
 export default function FragmentModal() {
   const router = useRouter()
-  const saveFragmentHook = useSaveFragment()
 
-  const { timeLine } = useTimeLineContext()
+  const { addingPointData, dispatch } = useTimelineContext()
   const [editingFragment, setEditingFragment] = useState<EditingFragment>({})
 
   const saveFragment = () => {
     router.back()
-    saveFragmentHook({
-      id: '',
-      packId: timeLine.addingPoint?.lineGroup,
-      type: 'excerpt',
-      title: editingFragment.title!,
-      summary: editingFragment.summary,
-      momentDate: editingFragment.momentDate
-        ? new Date(editingFragment.momentDate)
-        : undefined,
-      momentTime: editingFragment.momentTime
-        ? new Date(editingFragment.momentTime)
-        : undefined,
-      actualPosition: timeLine.addingPoint!,
+
+    const data = addingPointData.current!
+
+    dispatch({
+      type: 'add-point',
+      point: {
+        id: '' + Math.random() + 1000,
+        volumeId: data.volumeId,
+        characterId: data.characterId,
+        chapterId: data.chapterId,
+        type: 'excerpt',
+        title: editingFragment.title!,
+        actualPosition: data.position,
+      },
     })
   }
 

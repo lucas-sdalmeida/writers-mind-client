@@ -4,13 +4,17 @@ import { Line, NarrativeThread, Point } from './timeline'
 
 export function timeLineReducer(previous: Timeline, action: Action) {
   if (action.type == 'move-point') return movePoint(previous, action)
+  if (action.type == 'add-point') return addPoint(previous, action)
   return initTimeline(action.timeline)
 }
 
-export type Action = InitAction | MovePointAction
+export type Action = InitAction | MovePointAction | AddPointAction
 
 function initTimeline(timeline: TimelineDto) {
-  return { narrativeThreads: timeline.narrativeThreads }
+  return {
+    storyId: timeline.story.id,
+    narrativeThreads: timeline.narrativeThreads,
+  }
 }
 
 export type InitAction = {
@@ -115,4 +119,27 @@ export type MovePointAction = {
     line: number
     deltaX: number
   }
+}
+
+function addPoint(previous: Timeline, { point }: AddPointAction) {
+  const destinationThread = point.volumeId ?? point.characterId ?? ''
+
+  const narrativeThreads = previous.narrativeThreads.map((t) => {
+    const threadId = t.volumeId ?? t.characterId ?? ''
+    if (threadId !== destinationThread) return t
+
+    const lines = t.lines.map((l) => {
+      if (l.index !== point.actualPosition.line) return l
+      return { ...l, points: [...l.points, point] }
+    })
+
+    return { ...t, lines }
+  })
+
+  return { ...previous, narrativeThreads } as Timeline
+}
+
+export type AddPointAction = {
+  type: 'add-point'
+  point: Point
 }

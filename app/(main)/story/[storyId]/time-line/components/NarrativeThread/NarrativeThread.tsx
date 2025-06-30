@@ -7,11 +7,12 @@ import Line from '../Line'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
-function NarrativeThread({ thread }: Readonly<Props>) {
+function NarrativeThread({ storyId, thread }: Readonly<Props>) {
   return (
     <div className='w-full relative'>
       {thread.lines.map((l) => (
         <Line
+          storyId={storyId}
           key={l.index}
           volumeId={thread.volumeId}
           characterId={thread.characterId}
@@ -31,6 +32,7 @@ function NarrativeThread({ thread }: Readonly<Props>) {
 }
 
 type Props = {
+  storyId: string
   thread: NarrativeThreadData
 }
 
