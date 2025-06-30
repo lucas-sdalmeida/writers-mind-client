@@ -20,8 +20,11 @@ function Line({ storyId, line, volumeId, characterId }: Readonly<Props>) {
   })
 
   return (
-    <div ref={setNodeRef} className='w-full mb-2 last:mb-0 py-4 relative group'>
-      <div className='w-full relative z-0'>
+    <div
+      ref={setNodeRef}
+      className='w-full mb-2 last:mb-0 py-4 flex flex-col justify-center relative group'
+    >
+      <div className='w-full py-1 relative z-0'>
         <div
           className='w-full h-[.5px] relative z-0'
           style={{ backgroundColor: line.preferences.color }}
@@ -91,8 +94,8 @@ function ExcerptPoint({ line, point, offset }: Readonly<PointProps>) {
   })
 
   const transformStyle = transform
-    ? `translate(-50%, -50%) translate(${transform.x}px, ${transform.y}px)`
-    : 'translate(-50%, -50%)'
+    ? `translate(-50%, 0%) translate(${transform.x}px, ${transform.y}px)`
+    : 'translate(-50%, 0%)'
 
   return (
     <div
@@ -118,9 +121,8 @@ function ChapterPoint({ line, point, offset }: Readonly<PointProps>) {
     id: `${point.volumeId ?? ''}.${point.characterId ?? ''}.${line.index}.${point.id}`,
   })
 
-  const transformStyle = transform
-    ? `translate(0%, -50%) translate(${transform.x}px, ${transform.y}px)`
-    : 'translate(0%, -50%)'
+  const transformStyle =
+    transform && `translate(${transform.x}px, ${transform.y}px)`
 
   return (
     <div
@@ -132,7 +134,7 @@ function ChapterPoint({ line, point, offset }: Readonly<PointProps>) {
         width: `calc(4rem * ${point.actualPosition.width ?? 1})`,
         background: `linear-gradient(90deg, ${line.preferences.color} 0%, transparent 7%, transparent 93%, ${line.preferences.color} 100%)`,
         left: `calc(${offset}px + 4rem * ${point.actualPosition.x})`,
-        transform: transformStyle,
+        transform: transformStyle ?? undefined,
       }}
     >
       <div ref={setDroppableRef} className='w-full h-full'></div>

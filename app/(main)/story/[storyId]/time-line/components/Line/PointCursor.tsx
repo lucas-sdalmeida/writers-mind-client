@@ -50,7 +50,7 @@ export default function PointCursor({
   return (
     <div
       ref={elementRef}
-      className='size-2 rounded-full absolute z-10 -translate-x-1/2 -translate-y-1/2 hidden group-hover:block'
+      className='size-2 rounded-full absolute z-10 -translate-x-1/2 hidden group-hover:block'
       style={{
         backgroundColor: color,
         left: newPointPosition,
