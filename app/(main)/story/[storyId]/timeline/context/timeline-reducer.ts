@@ -122,11 +122,23 @@ function addPoint(previous: Timeline, { point, chapterPoint }: AddPointAction) {
 
     const lines = t.lines.map((l) => {
       if (l.index !== point.actualPosition.line) return l
+
+      const points = [] as Point[]
+      let addingPoint = point
+
+      for (const p of l.points) {
+        if (p.id === point.id) {
+          addingPoint = { ...point, actualPosition: p.actualPosition }
+          continue
+        }
+        points.push(p)
+      }
+
       return {
         ...l,
         points: chapterPoint
-          ? [...l.points, point, chapterPoint]
-          : [...l.points, point],
+          ? [...points, addingPoint, chapterPoint]
+          : [...points, addingPoint],
       }
     })
 

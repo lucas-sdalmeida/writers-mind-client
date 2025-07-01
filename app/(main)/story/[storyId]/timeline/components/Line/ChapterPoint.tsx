@@ -48,7 +48,7 @@ export default function ChapterPoint({
       },
     }
 
-    router.push(`/story/undefined/timeline/chapter/${point.id}/fragment`)
+    router.push(`/story/${point.storyId}/timeline/chapter/${point.id}/fragment`)
   }
 
   return (

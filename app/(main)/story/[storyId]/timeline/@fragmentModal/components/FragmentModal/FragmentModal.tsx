@@ -16,37 +16,59 @@ import { useState } from 'react'
 import { useTimelineContext } from '../../../context/TimeLineContext'
 import type { Chapter } from '../../api/getChapter'
 import { Point } from '../../../context/timeline'
+import { postFragment } from '../../api/postFragment'
+import { putFragment } from '../../api/putFragment'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
 export default function FragmentModal({ chapter }: Readonly<Props>) {
   const router = useRouter()
 
-  const { addingPointData, dispatch } = useTimelineContext()
+  const { timeline, addingPointData, dispatch } = useTimelineContext()
   const [editingFragment, setEditingFragment] = useState<EditingFragment>(
-    chapter || {
-      type: 'excerpt',
-    },
+    chapter
+      ? {
+          ...chapter,
+          momentDate: chapter.momentDate?.toISOString(),
+          momentTime: chapter.momentTime?.toISOString(),
+        }
+      : {
+          type: 'excerpt',
+        },
   )
   const [innerExcerpt, setInnerExcerpt] = useState<EditingFragment | undefined>(
     chapter && { type: 'excerpt' },
   )
+  const [error, setError] = useState(undefined as string | undefined)
 
   const handleTypeChange = (type: 'excerpt' | 'chapter') => {
     setEditingFragment({ ...editingFragment, type })
     setInnerExcerpt(type === 'chapter' ? { type: 'excerpt' } : undefined)
   }
 
-  const saveFragment = () => {
-    router.back()
+  const saveFragment = async () => {
+    if (!editingFragment.title || editingFragment.title === '') {
+      setError('O título é obrigatório')
+      return
+    }
+    if (
+      editingFragment.type === 'chapter' &&
+      (!innerExcerpt?.title || innerExcerpt.title === '')
+    ) {
+      setError('O título do novo trecho do capítulo é obrigatório!')
+      return
+    }
 
+    router.back()
     const data = addingPointData.current!
+
     const id = !chapter
       ? ('' + Math.random() * 1000).replace('.', '-')
       : chapter.id
 
     const point = {
       id,
+      storyId: timeline.storyId,
       volumeId: data.volumeId,
       characterId: data.characterId,
       chapterId: data.chapterId,
@@ -63,6 +85,7 @@ export default function FragmentModal({ chapter }: Readonly<Props>) {
         ? undefined
         : ({
             id: ('' + Math.random() * 1000).replace('.', '-'),
+            storyId: timeline.storyId,
             volumeId: data.volumeId,
             characterId: data.characterId,
             chapterId: id,
@@ -71,10 +94,47 @@ export default function FragmentModal({ chapter }: Readonly<Props>) {
             actualPosition: { ...data.position, x: data.position.x + 0.2 },
           } as Point)
 
+    const fragmentRequest = {
+      ...editingFragment,
+      ...point,
+      position: point.actualPosition,
+      momentDate: editingFragment.momentDate
+        ? new Date(editingFragment.momentDate)
+        : undefined,
+      momentTime: editingFragment.momentTime
+        ? new Date(editingFragment.momentTime)
+        : undefined,
+      content:
+        editingFragment.type === 'chapter'
+          ? undefined
+          : editingFragment.content,
+    }
+    const fragmentPromise = !chapter
+      ? postFragment(timeline.storyId, fragmentRequest)
+      : putFragment(point.id, fragmentRequest)
+
+    const innerFragmentRequest = innerExcerpt && {
+      ...innerExcerpt,
+      ...chapterPoint!,
+      position: chapterPoint!.actualPosition,
+      momentDate: innerExcerpt.momentDate
+        ? new Date(innerExcerpt.momentDate)
+        : undefined,
+      momentTime: innerExcerpt.momentTime
+        ? new Date(innerExcerpt.momentTime)
+        : undefined,
+      content: editingFragment.content,
+    }
+    const innerFragmentPromise = innerFragmentRequest
+      ? postFragment(timeline.storyId, innerFragmentRequest)
+      : Promise.resolve()
+
+    await Promise.all([fragmentPromise, innerFragmentPromise])
+
     dispatch({
       type: 'add-point',
-      point: chapter ? chapterPoint! : point,
-      chapterPoint: chapter ? undefined : chapterPoint,
+      point: point,
+      chapterPoint: chapterPoint,
     })
   }
 
@@ -224,6 +284,14 @@ export default function FragmentModal({ chapter }: Readonly<Props>) {
           </div>
         </div>
       </div>
+
+      {error && (
+        <div
+          className={`${quicksand.className} px-2 py-1 rounded-lg shadow-md text-white bg-[#e21010] fixed left-1 top-2`}
+        >
+          {error}
+        </div>
+      )}
     </Modal>
   )
 }
