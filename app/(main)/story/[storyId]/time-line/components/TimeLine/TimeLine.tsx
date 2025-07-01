@@ -11,6 +11,8 @@ import {
 import { useTimelineContext } from '../../context/TimeLineContext'
 import NarrativeThread from '../NarrativeThread'
 import { Point } from '../../context/timeline'
+import { useEffect } from 'react'
+import { patchTimelineThreads } from '../../api/patchTimelineThreads'
 
 export default function Timeline({ className }: Readonly<Props>) {
   const { timeline, dispatch } = useTimelineContext()
@@ -20,6 +22,11 @@ export default function Timeline({ className }: Readonly<Props>) {
       activationConstraint: { distance: 10 },
     }),
   )
+
+  useEffect(() => {
+    ;(async () =>
+      await patchTimelineThreads(timeline.storyId, timeline.narrativeThreads))()
+  }, [timeline])
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e

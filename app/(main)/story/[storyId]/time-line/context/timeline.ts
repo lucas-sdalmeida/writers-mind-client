@@ -6,6 +6,7 @@ export type Timeline = {
 }
 
 export type NarrativeThread = {
+  id: string
   volumeId?: string
   characterId?: string
   title?: string
