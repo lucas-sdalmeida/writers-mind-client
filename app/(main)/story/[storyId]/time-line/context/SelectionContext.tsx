@@ -11,9 +11,13 @@ type SelectionContextData = {
   narrativeThreadOnHover: RefObject<{ threadId: string; title?: string }>
   selectLine: (narrativeThreadId: string, line: number) => void
   removeLine: (narrativeThreadId: string, line: number) => void
+  clear: () => void
+  startAddingThread: () => void
+  stopAddingThread: () => void
 }
 
 export type SelectionContextState = {
+  addingNarrativeThread: boolean
   selectedLines: { narrativeThreadId: string; line: number }[]
 }
 
@@ -25,6 +29,7 @@ export default function SelectionContextProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const [selectionState, setSelectionState] = useState({
+    addingNarrativeThread: false,
     selectedLines: [],
   } as SelectionContextState)
   const narrativeThreadRef = useRef({ threadId: '' } as {
@@ -51,6 +56,19 @@ export default function SelectionContextProvider({
     })
   }
 
+  const startAddingThread = () =>
+    setSelectionState({ ...selectionState, addingNarrativeThread: true })
+
+  const stopAddingThread = () =>
+    setSelectionState({ ...selectionState, addingNarrativeThread: false })
+
+  const clear = () =>
+    setSelectionState({
+      ...selectionState,
+      addingNarrativeThread: false,
+      selectedLines: [],
+    })
+
   return (
     <SelectionContext.Provider
       value={{
@@ -58,6 +76,9 @@ export default function SelectionContextProvider({
         narrativeThreadOnHover: narrativeThreadRef,
         selectLine,
         removeLine,
+        clear,
+        startAddingThread,
+        stopAddingThread,
       }}
     >
       {children}

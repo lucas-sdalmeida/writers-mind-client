@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 
 import SideMenu from './components/SideMenu'
 import ContextMenu from './components/ContextMenu'
+import NarrativeThreadModal from './components/NarrativeThreadModal'
 import TimeLineContextProvider from './context/TimeLineContext'
 import SelectionContextProvider from './context/SelectionContext'
 
@@ -34,6 +35,8 @@ export default async function TimeLineLayout({
           <SideMenu storyId={storyId} />
 
           {fragmentModal}
+
+          <NarrativeThreadModal />
 
           <ContextMenu />
         </SelectionContextProvider>

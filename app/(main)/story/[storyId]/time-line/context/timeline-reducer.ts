@@ -6,6 +6,8 @@ export function timeLineReducer(previous: Timeline, action: Action) {
   if (action.type === 'move-point') return movePoint(previous, action)
   if (action.type === 'add-point') return addPoint(previous, action)
   if (action.type === 'add-line') return addLine(previous, action)
+  if (action.type === 'new-narrative-thread')
+    return addNarrativeThread(previous, action)
   return initTimeline(action.timeline)
 }
 
@@ -14,6 +16,7 @@ export type Action =
   | MovePointAction
   | AddPointAction
   | AddLineAction
+  | NewNarrativeThreadAction
 
 function initTimeline(timeline: TimelineDto) {
   return {
@@ -191,4 +194,72 @@ function generateRandomHexColor() {
 export type AddLineAction = {
   type: 'add-line'
   narrativeThreadId?: string
+}
+
+function addNarrativeThread(
+  previous: Timeline,
+  { title, lines: linesIndexes }: NewNarrativeThreadAction,
+) {
+  const sourceLines = [] as Line[]
+
+  const narrativeThreads = previous.narrativeThreads.map((t) => {
+    const threadId = t.volumeId ?? t.characterId ?? ''
+    if (threadId !== '') return t
+
+    const lines = [] as Line[]
+
+    for (const line of t.lines) {
+      if (linesIndexes.some((i) => i === line.index)) {
+        sourceLines.push(line)
+        continue
+      }
+      lines.push(line)
+    }
+
+    const defaultLine = {
+      index: 0,
+      preferences: { name: 'linha 1', color: '#10c3e2' },
+      points: [],
+    }
+
+    return {
+      ...t,
+      lines: lines.length > 0 ? lines : [defaultLine],
+    }
+  })
+
+  const id = ('' + Math.random() * 1000).replace('.', '-')
+  const newThread = {
+    volumeId: id,
+    title,
+    lines: sourceLines.map((l, i) => {
+      const points = l.points.map((p) => {
+        return {
+          ...p,
+          volumeId: id,
+          actualPosition: { ...p.actualPosition, line: i },
+        }
+      })
+      return {
+        ...l,
+        index: i,
+        preferences: {
+          name: `linha ${i + 1}`,
+          color: generateRandomHexColor(),
+        },
+        points,
+      }
+    }),
+  } as NarrativeThread
+
+  return {
+    ...previous,
+    narrativeThreads: [...narrativeThreads, newThread],
+  } as Timeline
+}
+
+export type NewNarrativeThreadAction = {
+  type: 'new-narrative-thread'
+  title: string
+  lines: number[]
 }

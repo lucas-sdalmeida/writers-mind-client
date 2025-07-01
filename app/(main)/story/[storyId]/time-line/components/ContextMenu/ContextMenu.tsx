@@ -13,7 +13,8 @@ export default function ContextMenu() {
   )
 
   const { dispatch } = useTimelineContext()
-  const { selectionState, narrativeThreadOnHover } = useSelectionContext()
+  const { selectionState, narrativeThreadOnHover, startAddingThread } =
+    useSelectionContext()
 
   useEffect(() => {
     const handleContextMenu = (e: globalThis.MouseEvent) => {
@@ -59,7 +60,10 @@ export default function ContextMenu() {
         selectionState.selectedLines.every(
           (l) => l.narrativeThreadId === '',
         ) && (
-          <button className='p-2 rounded-md border-none outline-none bg-transparent hover:bg-gray-200 hover:underline'>
+          <button
+            className='p-2 rounded-md border-none outline-none bg-transparent hover:bg-gray-200 hover:underline'
+            onClick={() => startAddingThread()}
+          >
             + Volume com essas linhas
           </button>
         )}
