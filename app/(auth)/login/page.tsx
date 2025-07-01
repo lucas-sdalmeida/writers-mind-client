@@ -100,13 +100,16 @@ export default function LoginPage() {
         <p className='w-full text-center'>
           Imagem de{' '}
           <a
-            className='undeline'
+            className='underline'
             href='https://pixabay.com/pt/users/pexels-2286921/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1840276'
           >
             Pexels
           </a>{' '}
           por{' '}
-          <a href='https://pixabay.com/pt//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1840276'>
+          <a
+            className='underline'
+            href='https://pixabay.com/pt//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1840276'
+          >
             Pixabay
           </a>
         </p>
