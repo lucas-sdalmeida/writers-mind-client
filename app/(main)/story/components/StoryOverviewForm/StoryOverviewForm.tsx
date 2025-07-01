@@ -12,7 +12,7 @@ import {
 import { ConfirmButton, DangerButton } from '@/app/(main)/components/Button'
 import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { postStory } from '../../api/post-story'
+import { postStory } from '../../api/postStory'
 import type { Story } from '../../api'
 import { updateStory } from '../../[storyId]/api'
 
@@ -38,7 +38,10 @@ export default function StoryOverviewForm({
       return
     }
 
-    const id = await postStory(editingStory)
+    const id = await postStory({
+      ...editingStory,
+      title: editingStory.title ?? '',
+    })
     router.push(`/story/${id}/time-line`)
   }
 

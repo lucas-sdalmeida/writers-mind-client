@@ -10,7 +10,7 @@ import {
 } from 'react'
 import Timeline from './timeline'
 import { Action, timeLineReducer } from './timeline-reducer'
-import type { TimelineDto } from '../api/get-timeline'
+import type { TimelineDto } from '../api/getTimeline'
 
 export const TimeLineContext = createContext<TimeLineContextData | undefined>(
   undefined,

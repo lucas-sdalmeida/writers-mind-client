@@ -21,7 +21,7 @@ export default function ConfirmButton({
 
 type Props = {
   children: React.ReactNode
-  className: string
+  className?: string
   onClick?: () => void
   onSubmit?: (e: FormEvent<HTMLButtonElement>) => void
 }

@@ -1,3 +1,3 @@
-import { getAllStories } from './get-all-stories'
+import { getAllStories } from './getAllStories'
 import type { Story } from './story'
 export { getAllStories, Story }
