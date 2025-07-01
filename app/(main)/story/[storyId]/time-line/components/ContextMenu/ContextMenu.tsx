@@ -49,11 +49,14 @@ export default function ContextMenu() {
           `à "${narrativeThreadOnHover.current.title}"`}
       </button>
 
-      {selectionState.selectedLines.length > 0 && (
-        <button className='p-2 rounded-md border-none outline-none bg-transparent hover:bg-gray-200 hover:underline'>
-          + Volume com essas linhas
-        </button>
-      )}
+      {selectionState.selectedLines.length > 0 &&
+        selectionState.selectedLines.every(
+          (l) => l.narrativeThreadId === '',
+        ) && (
+          <button className='p-2 rounded-md border-none outline-none bg-transparent hover:bg-gray-200 hover:underline'>
+            + Volume com essas linhas
+          </button>
+        )}
     </div>
   )
 }
