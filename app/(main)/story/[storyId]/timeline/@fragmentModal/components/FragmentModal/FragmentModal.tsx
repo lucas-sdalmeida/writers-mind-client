@@ -21,23 +21,23 @@ import { putFragment } from '../../api/putFragment'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
-export default function FragmentModal({ chapter }: Readonly<Props>) {
+export default function FragmentModal({ fragment: fragment }: Readonly<Props>) {
   const router = useRouter()
 
   const { timeline, addingPointData, dispatch } = useTimelineContext()
   const [editingFragment, setEditingFragment] = useState<EditingFragment>(
-    chapter
+    fragment
       ? {
-          ...chapter,
-          momentDate: chapter.momentDate?.toISOString(),
-          momentTime: chapter.momentTime?.toISOString(),
+          ...fragment,
+          momentDate: fragment.momentDate?.toISOString(),
+          momentTime: fragment.momentTime?.toISOString(),
         }
       : {
           type: 'excerpt',
         },
   )
   const [innerExcerpt, setInnerExcerpt] = useState<EditingFragment | undefined>(
-    chapter && { type: 'excerpt' },
+    fragment && fragment.type === 'chapter' ? { type: 'excerpt' } : undefined,
   )
   const [error, setError] = useState(undefined as string | undefined)
 
@@ -62,9 +62,9 @@ export default function FragmentModal({ chapter }: Readonly<Props>) {
     router.back()
     const data = addingPointData.current!
 
-    const id = !chapter
+    const id = !fragment
       ? ('' + Math.random() * 1000).replace('.', '-')
-      : chapter.id
+      : fragment.id
 
     const point = {
       id,
@@ -109,7 +109,7 @@ export default function FragmentModal({ chapter }: Readonly<Props>) {
           ? undefined
           : editingFragment.content,
     }
-    const fragmentPromise = !chapter
+    const fragmentPromise = !fragment
       ? postFragment(timeline.storyId, fragmentRequest)
       : putFragment(point.id, fragmentRequest)
 
@@ -177,7 +177,7 @@ export default function FragmentModal({ chapter }: Readonly<Props>) {
               value={editingFragment.type}
               options={{ excerpt: 'Trecho', chapter: 'Capítulo' }}
               onChange={(v) => handleTypeChange(v as 'excerpt' | 'chapter')}
-              disabled={chapter != undefined}
+              disabled={fragment != undefined}
             />
 
             <InputField
@@ -297,7 +297,7 @@ export default function FragmentModal({ chapter }: Readonly<Props>) {
 }
 
 type Props = {
-  chapter?: Chapter
+  fragment?: Chapter
 }
 
 type EditingFragment = {

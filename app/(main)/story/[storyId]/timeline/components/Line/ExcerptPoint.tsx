@@ -6,6 +6,10 @@ import type {
   Line as LineData,
   Point as PointData,
 } from '../../context/timeline'
+import { MouseEvent } from 'react'
+import { useRouter } from 'next/navigation'
+import { useTimelineContext } from '../../context/TimeLineContext'
+import { useUnitsInPx } from '../../hooks/useUnitsInPx'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
@@ -14,6 +18,11 @@ export default function ExcerptPoint({
   point,
   offset,
 }: Readonly<PointProps>) {
+  const router = useRouter()
+  const unitInPx = useUnitsInPx()
+
+  const { addingPointData } = useTimelineContext()
+
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: point.id,
     data: point,
@@ -22,6 +31,22 @@ export default function ExcerptPoint({
   const transformStyle = transform
     ? `translate(-50%, 0%) translate(${transform.x}px, ${transform.y}px)`
     : 'translate(-50%, 0%)'
+
+  const handleOnClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (transform) return
+
+    addingPointData.current = {
+      volumeId: point.volumeId,
+      characterId: point.characterId,
+      chapterId: point.chapterId,
+      position: {
+        line: point.actualPosition.line,
+        x: (e.clientX - 350) / unitInPx,
+      },
+    }
+
+    router.push(`/story/${point.storyId}/timeline/chapter/${point.id}/fragment`)
+  }
 
   return (
     <>
@@ -35,6 +60,7 @@ export default function ExcerptPoint({
           left: `calc(${offset}px + 4rem * ${point.actualPosition.x})`,
           transform: transformStyle,
         }}
+        onMouseUp={handleOnClick}
       ></div>
 
       {!point.chapterId && !transform && (

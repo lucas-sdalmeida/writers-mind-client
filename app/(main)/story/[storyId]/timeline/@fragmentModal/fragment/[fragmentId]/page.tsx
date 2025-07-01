@@ -1,5 +1,5 @@
-import { getChapter } from '../../../api/getChapter'
-import FragmentModal from '../../../components/FragmentModal'
+import { getChapter } from '../../api/getChapter'
+import FragmentModal from '../../components/FragmentModal'
 
 export default async function AddFragmentModal({
   params,
