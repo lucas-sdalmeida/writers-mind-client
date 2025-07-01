@@ -8,6 +8,7 @@ export default function SelectField({
   value,
   defaultValue,
   options,
+  disabled,
   onChange,
 }: Readonly<Props>) {
   return (
@@ -18,6 +19,7 @@ export default function SelectField({
         name={name}
         value={value}
         defaultValue={defaultValue}
+        disabled={disabled}
         onChange={(e) => onChange && onChange(e.target.value)}
       >
         {Object.keys(options).map((o) => (
@@ -37,5 +39,6 @@ type Props = {
   value?: string | number
   defaultValue?: number | string
   options: { [value: string | number]: string }
+  disabled?: boolean
   onChange?: (value: string | number) => void
 }

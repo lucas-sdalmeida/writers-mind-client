@@ -14,18 +14,22 @@ import Modal from '../Modal'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useTimelineContext } from '../../../context/TimeLineContext'
+import type { Chapter } from '../../api/getChapter'
+import { Point } from '../../../context/timeline'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
-export default function FragmentModal() {
+export default function FragmentModal({ chapter }: Readonly<Props>) {
   const router = useRouter()
 
   const { addingPointData, dispatch } = useTimelineContext()
-  const [editingFragment, setEditingFragment] = useState<EditingFragment>({
-    type: 'excerpt',
-  })
+  const [editingFragment, setEditingFragment] = useState<EditingFragment>(
+    chapter || {
+      type: 'excerpt',
+    },
+  )
   const [innerExcerpt, setInnerExcerpt] = useState<EditingFragment | undefined>(
-    undefined,
+    chapter && { type: 'excerpt' },
   )
 
   const handleTypeChange = (type: 'excerpt' | 'chapter') => {
@@ -37,34 +41,40 @@ export default function FragmentModal() {
     router.back()
 
     const data = addingPointData.current!
-    const id = ('' + Math.random() * 1000).replace('.', '-')
+    const id = !chapter
+      ? ('' + Math.random() * 1000).replace('.', '-')
+      : chapter.id
+
+    const point = {
+      id,
+      volumeId: data.volumeId,
+      characterId: data.characterId,
+      chapterId: data.chapterId,
+      type: editingFragment.type,
+      title: editingFragment.title!,
+      actualPosition:
+        editingFragment.type === 'excerpt'
+          ? data.position
+          : { ...data.position, width: 1 },
+    }
+
+    const chapterPoint =
+      editingFragment.type === 'excerpt'
+        ? undefined
+        : ({
+            id: ('' + Math.random() * 1000).replace('.', '-'),
+            volumeId: data.volumeId,
+            characterId: data.characterId,
+            chapterId: id,
+            title: innerExcerpt!.title!,
+            type: 'excerpt',
+            actualPosition: { ...data.position, x: data.position.x + 0.2 },
+          } as Point)
 
     dispatch({
       type: 'add-point',
-      point: {
-        id,
-        volumeId: data.volumeId,
-        characterId: data.characterId,
-        chapterId: data.chapterId,
-        type: editingFragment.type,
-        title: editingFragment.title!,
-        actualPosition:
-          editingFragment.type === 'excerpt'
-            ? data.position
-            : { ...data.position, width: 1 },
-      },
-      chapterPoint:
-        editingFragment.type === 'excerpt'
-          ? undefined
-          : {
-              id: ('' + Math.random() * 1000).replace('.', '-'),
-              volumeId: data.volumeId,
-              characterId: data.characterId,
-              chapterId: id,
-              title: innerExcerpt!.title!,
-              type: 'excerpt',
-              actualPosition: { ...data.position, x: data.position.x + 0.2 },
-            },
+      point: chapter ? chapterPoint! : point,
+      chapterPoint: chapter ? undefined : chapterPoint,
     })
   }
 
@@ -107,6 +117,7 @@ export default function FragmentModal() {
               value={editingFragment.type}
               options={{ excerpt: 'Trecho', chapter: 'Capítulo' }}
               onChange={(v) => handleTypeChange(v as 'excerpt' | 'chapter')}
+              disabled={chapter != undefined}
             />
 
             <InputField
@@ -215,6 +226,10 @@ export default function FragmentModal() {
       </div>
     </Modal>
   )
+}
+
+type Props = {
+  chapter?: Chapter
 }
 
 type EditingFragment = {

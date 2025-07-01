@@ -2,7 +2,13 @@
 
 import { useEffect } from 'react'
 
-import { DndContext, DragEndEvent } from '@dnd-kit/core'
+import {
+  DndContext,
+  DragEndEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
 
 import type { TimelineDto } from '../../api/get-timeline'
 import { useTimelineContext } from '../../context/TimeLineContext'
@@ -15,6 +21,12 @@ export default function Timeline({ dto, className }: Readonly<Props>) {
   useEffect(() => {
     dispatch({ type: 'init', timeline: dto })
   }, [dto, dispatch])
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 10 },
+    }),
+  )
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e
@@ -40,7 +52,7 @@ export default function Timeline({ dto, className }: Readonly<Props>) {
 
   return (
     <div className={`${className} w-full flex flex-col justify-center gap-16`}>
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         {timeline.narrativeThreads.map((t, i) => {
           return (
             <NarrativeThread key={i} storyId={timeline.storyId} thread={t} />

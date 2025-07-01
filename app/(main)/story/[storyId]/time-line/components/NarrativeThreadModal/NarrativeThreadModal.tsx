@@ -20,8 +20,6 @@ export default function NarrativeThreadModal() {
     clear()
   }
 
-  console.log(selectionState)
-
   if (!selectionState.addingNarrativeThread) return <></>
 
   return (
