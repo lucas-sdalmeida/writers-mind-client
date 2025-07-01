@@ -3,6 +3,7 @@
 import { Quicksand } from 'next/font/google'
 import { useEffect, useState } from 'react'
 import { useSelectionContext } from '../../context/SelectionContext'
+import { useTimelineContext } from '../../context/TimeLineContext'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
@@ -10,6 +11,8 @@ export default function ContextMenu() {
   const [coordinate, setCoordinate] = useState(
     undefined as { x: number; y: number } | undefined,
   )
+
+  const { dispatch } = useTimelineContext()
   const { selectionState, narrativeThreadOnHover } = useSelectionContext()
 
   useEffect(() => {
@@ -32,7 +35,15 @@ export default function ContextMenu() {
       }}
       onMouseLeave={() => setCoordinate(undefined)}
     >
-      <button className='p-2 rounded-md border-none outline-none bg-transparent hover:bg-gray-200 hover:underline'>
+      <button
+        className='p-2 rounded-md border-none outline-none bg-transparent hover:bg-gray-200 hover:underline'
+        onClick={() =>
+          dispatch({
+            type: 'add-line',
+            narrativeThreadId: narrativeThreadOnHover.current.threadId,
+          })
+        }
+      >
         Nova linha{' '}
         {narrativeThreadOnHover.current.title &&
           `à "${narrativeThreadOnHover.current.title}"`}

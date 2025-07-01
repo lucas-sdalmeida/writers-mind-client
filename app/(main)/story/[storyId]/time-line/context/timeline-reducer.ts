@@ -3,12 +3,17 @@ import type Timeline from './timeline'
 import { Line, NarrativeThread, Point } from './timeline'
 
 export function timeLineReducer(previous: Timeline, action: Action) {
-  if (action.type == 'move-point') return movePoint(previous, action)
-  if (action.type == 'add-point') return addPoint(previous, action)
+  if (action.type === 'move-point') return movePoint(previous, action)
+  if (action.type === 'add-point') return addPoint(previous, action)
+  if (action.type === 'add-line') return addLine(previous, action)
   return initTimeline(action.timeline)
 }
 
-export type Action = InitAction | MovePointAction | AddPointAction
+export type Action =
+  | InitAction
+  | MovePointAction
+  | AddPointAction
+  | AddLineAction
 
 function initTimeline(timeline: TimelineDto) {
   return {
@@ -148,4 +153,42 @@ export type AddPointAction = {
   type: 'add-point'
   point: Point
   chapterPoint?: Point
+}
+
+function addLine(previous: Timeline, { narrativeThreadId }: AddLineAction) {
+  const narrativeThreads = previous.narrativeThreads.map((t) => {
+    const threadId = t.volumeId ?? t.characterId ?? ''
+    if (threadId !== narrativeThreadId) return t
+
+    const line = {
+      index: t.lines.length,
+      preferences: {
+        name: `linha ${t.lines.length}`,
+        color: generateRandomHexColor(),
+      },
+      points: [],
+    } as Line
+    const lines = [...t.lines, line]
+
+    return { ...t, lines }
+  })
+
+  return { ...previous, narrativeThreads } as Timeline
+}
+
+function generateRandomHexColor() {
+  const hexCharacters = '0123456789abcdef'
+  let hexColorRep = '#'
+
+  for (let index = 0; index < 6; index++) {
+    const randomPosition = Math.floor(Math.random() * hexCharacters.length)
+    hexColorRep += hexCharacters[randomPosition]
+  }
+
+  return hexColorRep
+}
+
+export type AddLineAction = {
+  type: 'add-line'
+  narrativeThreadId?: string
 }
