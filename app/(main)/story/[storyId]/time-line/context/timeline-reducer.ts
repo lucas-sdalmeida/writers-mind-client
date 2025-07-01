@@ -163,7 +163,7 @@ function addLine(previous: Timeline, { narrativeThreadId }: AddLineAction) {
     const line = {
       index: t.lines.length,
       preferences: {
-        name: `linha ${t.lines.length}`,
+        name: `linha ${t.lines.length + 1}`,
         color: generateRandomHexColor(),
       },
       points: [],

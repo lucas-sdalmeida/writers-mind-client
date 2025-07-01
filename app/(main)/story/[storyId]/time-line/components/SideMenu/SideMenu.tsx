@@ -10,10 +10,14 @@ import {
   Waypoints,
   Plus,
 } from 'lucide-react'
+import { useTimelineContext } from '../../context/TimeLineContext'
+import NarrativeThreadMenuItem from './NarrativeThreadMenuItem'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
 export default function SideMenu({ storyId }: { storyId: string }) {
+  const { timeline } = useTimelineContext()
+
   return (
     <div
       className={`${quicksand.className} w-56 h-5/6 ml-8 px-3 pb-3 rounded-2xl shadow-lg bg-white absolute z-10 flex flex-col gap-2`}
@@ -47,7 +51,14 @@ export default function SideMenu({ storyId }: { storyId: string }) {
         <Plus size={14} className='text-[#10c3e2] hover:text-cyan-600' />
       </div>
 
-      <ul className='flex-1 w-full h-full p-2 rounded-md bg-gray-100'></ul>
+      <ul className='flex-1 w-full h-full p-2 rounded-md bg-gray-100'>
+        {timeline.narrativeThreads.map((t) => (
+          <NarrativeThreadMenuItem
+            key={t.volumeId ?? t.characterId ?? ''}
+            narrativeThread={t}
+          />
+        ))}
+      </ul>
     </div>
   )
 }
