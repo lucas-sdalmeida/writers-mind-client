@@ -20,7 +20,7 @@ export default async function StoryOverviewPage({ params }: Readonly<Props>) {
           Salão das Histórias
         </LinkOption>
         <LinkOption
-          href={`/story/${storyId}/time-line`}
+          href={`/story/${storyId}/timeline`}
           icon={<GitCommitHorizontal size={16} />}
         >
           Linha do Tempo

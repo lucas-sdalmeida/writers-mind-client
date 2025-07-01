@@ -40,7 +40,7 @@ export default function PointCursor({
       position: { line: lineIndex, x: (newPointPosition - 350) / unitsInPx },
     }
 
-    router.push(`/story/${storyId}/time-line/fragment`)
+    router.push(`/story/${storyId}/timeline/fragment`)
   }
 
   useEffect(() => {

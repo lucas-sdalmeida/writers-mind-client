@@ -34,7 +34,7 @@ export default function StoryOverviewForm({
 
     if (story) {
       await updateStory({ ...story, ...editingStory })
-      router.push(`/story/${story.id}/time-line`)
+      router.push(`/story/${story.id}/timeline`)
       return
     }
 
@@ -42,7 +42,7 @@ export default function StoryOverviewForm({
       ...editingStory,
       title: editingStory.title ?? '',
     })
-    router.push(`/story/${id}/time-line`)
+    router.push(`/story/${id}/timeline`)
   }
 
   return (
@@ -114,7 +114,7 @@ export default function StoryOverviewForm({
 
         <div className='w-full p-2 flex justify-end items-center gap-3'>
           <ConfirmButton>Salvar</ConfirmButton>
-          <Link href={story ? `/story/${story.id}/time-line` : '/story'}>
+          <Link href={story ? `/story/${story.id}/timeline` : '/story'}>
             <DangerButton>Cancelar</DangerButton>
           </Link>
         </div>

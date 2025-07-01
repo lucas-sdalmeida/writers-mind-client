@@ -19,7 +19,7 @@ export default function StoryCard({ story }: { story: Story }) {
     <div className='w-60 h-fit group'>
       <div className='w-full h-36 rounded-xl bg-[#d9d9d9] shadow-[4px_4px_4px_#00000040]'>
         <Link
-          href={`/story/${story.id}/time-line`}
+          href={`/story/${story.id}/timeline`}
           className='w-full h-full no-underline flex justify-center items-center'
         >
           {story.coverImageUri ? (
@@ -39,7 +39,7 @@ export default function StoryCard({ story }: { story: Story }) {
 
         <div className='text-xs flex gap-2 items-center invisible group-hover:visible'>
           <Link
-            href={`/story/${story.id}/time-line`}
+            href={`/story/${story.id}/timeline`}
             className='hover:text-emerald-600'
           >
             <GitCommitHorizontal strokeWidth={1} />
