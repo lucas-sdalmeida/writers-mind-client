@@ -7,8 +7,12 @@ import { ArrowLeft } from 'lucide-react'
 
 import { InputField } from '@/app/(main)/components/InputField'
 import { ConfirmButton } from '@/app/(main)/components/Button'
+import ProfilePicture from '@/app/(main)/components/ProfilePicture'
+
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { getUsers } from '../api/getUsers'
+import { createUser } from '../api/createUser'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
@@ -24,7 +28,7 @@ export default function SignUpPage() {
   })
   const [error, setError] = useState(undefined as string | undefined)
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (credentials.name === '') {
       setError('O nome precisa ser fornecido')
       return
@@ -41,6 +45,17 @@ export default function SignUpPage() {
       setError('A senha e a confirmação não possuem valores diferentes')
       return
     }
+
+    const users = await getUsers()
+
+    if (users.some((u) => u.email === credentials.email)) {
+      setError('Já existe um usuário com esse email!')
+      return
+    }
+
+    const id = await createUser(credentials)
+    window.localStorage.setItem('authorId', id)
+
     router.push('/story')
   }
 
@@ -75,13 +90,19 @@ export default function SignUpPage() {
       </span>
 
       <div className='col-start-2 col-span-full w-full h-full bg-[#f6f6f6ee] flex flex-col justify-center items-center gap-12'>
-        <button
-          className='w-1/2 flex items-center gap-2'
-          onClick={() => router.back()}
-        >
-          <ArrowLeft color='#404040' />
-          Voltar
-        </button>
+        <div className='w-1/2 grid-cols-3'>
+          <button
+            className='flex items-center gap-2'
+            onClick={() => router.back()}
+          >
+            <ArrowLeft color='#404040' />
+            Voltar
+          </button>
+
+          <div className='col-start-2 w-full flex justify-center items-center'>
+            <ProfilePicture radius={48} />
+          </div>
+        </div>
 
         <form className='w-1/2'>
           <InputField

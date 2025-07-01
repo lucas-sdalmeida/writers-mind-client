@@ -1,19 +1,34 @@
+'use client'
+
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
 
 import ProfilePicture from '../ProfilePicture'
+import { Author, getUser } from '../../api/getUser'
+import { useEffect, useRef, useState } from 'react'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 
-export default async function AuthorInfo({
+export default function AuthorInfo({
   orientation,
   hidePseudonym,
-}: Readonly<{ orientation: Orientation; hidePseudonym?: boolean }>) {
+}: Readonly<{
+  orientation: Orientation
+  hidePseudonym?: boolean
+}>) {
   const orientationClass =
     orientation == Orientation.LEFT
       ? 'flex-row justify-start'
       : 'flex-row-reverse justify-end'
-  const user = await findCurrentUser()
+  const [user, setUser] = useState({} as Author)
+  const id = useRef(localStorage.getItem('userId')!)
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      setUser(await findCurrentUser(id.current))
+    }
+    fetchUser()
+  }, [])
 
   return (
     <div>
@@ -37,12 +52,8 @@ export enum Orientation {
   RIGHT,
 }
 
-function findCurrentUser() {
-  return Promise.resolve({
-    username: 'User',
-    pseudonym: 'pseudonym' as string | undefined,
-    pictureUrl: undefined as string | undefined,
-  })
+async function findCurrentUser(authorId: string) {
+  return await getUser(authorId)
 }
 
 function UsernameAndPseudonym({
@@ -52,7 +63,7 @@ function UsernameAndPseudonym({
 }: Readonly<UsernameAndPseudonymProps>) {
   return (
     <div className={`py-1 flex flex-col justify-center ${className}`}>
-      <p className='text-sm font-bold'>{user.username}</p>
+      <p className='text-sm font-bold'>{user.name}</p>
       {user.pseudonym && !hidePseudonym && (
         <p className='text-[.65rem] font-bold text-[#444444]'>
           {user.pseudonym}
@@ -63,7 +74,7 @@ function UsernameAndPseudonym({
 }
 
 type UsernameAndPseudonymProps = {
-  user: { username: string; pseudonym?: string }
+  user: { name: string; pseudonym?: string }
   className: string
   hidePseudonym?: boolean
 }

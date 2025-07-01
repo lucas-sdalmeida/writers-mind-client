@@ -7,6 +7,7 @@ import { InputField } from '@/app/(main)/components/InputField'
 import { ConfirmButton } from '@/app/(main)/components/Button'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { getUsers } from '../api/getUsers'
 
 const mrDafoe = Mr_Dafoe({ weight: '400', subsets: ['latin'] })
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
@@ -18,7 +19,7 @@ export default function LoginPage() {
   const [credentials, setCredentials] = useState({ email: '', password: '' })
   const [error, setError] = useState(undefined as string | undefined)
 
-  const handleLogIn = () => {
+  const handleLogIn = async () => {
     if (credentials.email === '') {
       setError('O email precisa ser fornecido')
       return
@@ -28,6 +29,18 @@ export default function LoginPage() {
       return
     }
 
+    const users = await getUsers()
+    const user = users.find(
+      (u) =>
+        u.email === credentials.email && u.password === credentials.password,
+    )
+
+    if (!user) {
+      setError('Email ou senha inválidos!')
+      return
+    }
+
+    window.localStorage.setItem('userId', user.id)
     router.push('/story')
   }
 
