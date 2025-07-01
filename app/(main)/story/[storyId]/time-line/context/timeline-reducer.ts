@@ -1,4 +1,3 @@
-import type { TimelineDto } from '../api/get-timeline'
 import type Timeline from './timeline'
 import { Line, NarrativeThread, Point } from './timeline'
 
@@ -6,29 +5,14 @@ export function timeLineReducer(previous: Timeline, action: Action) {
   if (action.type === 'move-point') return movePoint(previous, action)
   if (action.type === 'add-point') return addPoint(previous, action)
   if (action.type === 'add-line') return addLine(previous, action)
-  if (action.type === 'new-narrative-thread')
-    return addNarrativeThread(previous, action)
-  return initTimeline(action.timeline)
+  return addNarrativeThread(previous, action)
 }
 
 export type Action =
-  | InitAction
   | MovePointAction
   | AddPointAction
   | AddLineAction
   | NewNarrativeThreadAction
-
-function initTimeline(timeline: TimelineDto) {
-  return {
-    storyId: timeline.story.id,
-    narrativeThreads: timeline.narrativeThreads,
-  }
-}
-
-export type InitAction = {
-  type: 'init'
-  timeline: TimelineDto
-}
 
 function movePoint(previous: Timeline, action: MovePointAction) {
   const narrativeThreads = mapNarrativeThreads(

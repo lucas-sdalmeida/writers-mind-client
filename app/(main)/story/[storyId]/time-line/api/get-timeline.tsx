@@ -12,12 +12,14 @@ export async function getTimeline(storyId: string) {
             points: [
               {
                 id: 'abc',
+                storyId: 'aaaaaaaaaaa',
                 title: 'Ponto A',
                 type: 'excerpt',
                 actualPosition: { line: 0, x: 5 },
               },
               {
                 id: 'abcd',
+                storyId: 'aaaaaaaaaaa',
                 title: 'Ponto B',
                 type: 'excerpt',
                 actualPosition: { line: 0, x: 6 },
@@ -30,6 +32,7 @@ export async function getTimeline(storyId: string) {
             points: [
               {
                 id: 'abcde',
+                storyId: 'aaaaaaaaaaa',
                 title: 'Ponto C',
                 type: 'excerpt',
                 actualPosition: { line: 1, x: 5.1 },
@@ -48,6 +51,7 @@ export async function getTimeline(storyId: string) {
             points: [
               {
                 id: 'abcdef',
+                storyId: 'aaaaaaaaaaa',
                 volumeId: 'a',
                 title: 'Capitulo 1',
                 type: 'chapter',
@@ -55,6 +59,7 @@ export async function getTimeline(storyId: string) {
               },
               {
                 id: 'abcdefg',
+                storyId: 'aaaaaaaaaaa',
                 volumeId: 'a',
                 chapterId: 'abcdef',
                 title: 'Ponto D',

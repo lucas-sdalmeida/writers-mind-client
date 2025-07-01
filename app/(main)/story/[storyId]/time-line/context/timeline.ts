@@ -20,6 +20,7 @@ export type Line = {
 
 export type Point = {
   id: string
+  storyId: string
   volumeId?: string
   characterId?: string
   chapterId?: string

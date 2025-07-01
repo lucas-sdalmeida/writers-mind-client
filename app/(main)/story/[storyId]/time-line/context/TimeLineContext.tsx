@@ -10,6 +10,7 @@ import {
 } from 'react'
 import Timeline from './timeline'
 import { Action, timeLineReducer } from './timeline-reducer'
+import type { TimelineDto } from '../api/get-timeline'
 
 export const TimeLineContext = createContext<TimeLineContextData | undefined>(
   undefined,
@@ -33,11 +34,12 @@ export function useTimelineContext() {
 }
 
 export default function TimeLineContextProvider({
+  timeline: dto,
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<Props>) {
   const [timeline, dispatch] = useReducer(timeLineReducer, {
-    storyId: '',
-    narrativeThreads: [],
+    storyId: dto.story.id,
+    narrativeThreads: dto.narrativeThreads,
   })
   const addingPointData = useRef<AddingPointData | undefined>(undefined)
 
@@ -46,4 +48,9 @@ export default function TimeLineContextProvider({
       {children}
     </TimeLineContext.Provider>
   )
+}
+
+type Props = {
+  timeline: TimelineDto
+  children: React.ReactNode
 }

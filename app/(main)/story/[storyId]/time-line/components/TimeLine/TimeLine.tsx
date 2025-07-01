@@ -1,7 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
-
 import {
   DndContext,
   DragEndEvent,
@@ -10,17 +8,12 @@ import {
   useSensors,
 } from '@dnd-kit/core'
 
-import type { TimelineDto } from '../../api/get-timeline'
 import { useTimelineContext } from '../../context/TimeLineContext'
 import NarrativeThread from '../NarrativeThread'
 import { Point } from '../../context/timeline'
 
-export default function Timeline({ dto, className }: Readonly<Props>) {
+export default function Timeline({ className }: Readonly<Props>) {
   const { timeline, dispatch } = useTimelineContext()
-
-  useEffect(() => {
-    dispatch({ type: 'init', timeline: dto })
-  }, [dto, dispatch])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -64,6 +57,5 @@ export default function Timeline({ dto, className }: Readonly<Props>) {
 }
 
 type Props = {
-  dto: TimelineDto
   className?: string
 }
