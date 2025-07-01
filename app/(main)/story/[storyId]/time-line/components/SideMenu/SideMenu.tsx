@@ -16,7 +16,7 @@ import NarrativeThreadMenuItem from './NarrativeThreadMenuItem'
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
 export default function SideMenu({ storyId }: { storyId: string }) {
-  const { timeline } = useTimelineContext()
+  const { timeline, dispatch } = useTimelineContext()
 
   return (
     <div
@@ -48,7 +48,11 @@ export default function SideMenu({ storyId }: { storyId: string }) {
 
       <div className='w-full px-2 flex justify-between items-center'>
         <p className='text-xs'>Linhas do tempo</p>
-        <Plus size={14} className='text-[#10c3e2] hover:text-cyan-600' />
+        <Plus
+          size={14}
+          className='text-[#10c3e2] hover:text-cyan-600'
+          onClick={() => dispatch({ type: 'add-line', narrativeThreadId: '' })}
+        />
       </div>
 
       <ul className='flex-1 w-full h-full p-2 rounded-md bg-gray-100'>
