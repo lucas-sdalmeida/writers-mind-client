@@ -1,6 +1,7 @@
 'use client'
 
 import { Inter, Mr_Dafoe, Quicksand } from 'next/font/google'
+import Link from 'next/link'
 
 import { InputField } from '@/app/(main)/components/InputField'
 import { ConfirmButton } from '@/app/(main)/components/Button'
@@ -81,9 +82,21 @@ export default function LoginPage() {
           />
         </form>
 
-        <ConfirmButton className='w-3/4' onClick={handleLogIn}>
-          Entrar
-        </ConfirmButton>
+        <div className='w-full flex flex-col items-center gap-2'>
+          <ConfirmButton className='w-3/4' onClick={handleLogIn}>
+            Entrar
+          </ConfirmButton>
+
+          <p className={`${quicksand.className} text-sm`}>
+            Não tem conta?{' '}
+            <Link
+              href='/signup'
+              className='text-[#10c3e2] underline hover:text-cyan-600'
+            >
+              Cadastre-se
+            </Link>
+          </p>
+        </div>
 
         {error && (
           <span
