@@ -49,6 +49,12 @@ export default function ContextMenu() {
           `à "${narrativeThreadOnHover.current.title}"`}
       </button>
 
+      {selectionState.selectedLines.length > 0 && (
+        <button className='p-2 rounded-md border-none outline-none bg-transparent hover:bg-gray-200 hover:underline'>
+          Excluir {selectionState.selectedLines.length > 1 ? 'linhas' : 'linha'}
+        </button>
+      )}
+
       {selectionState.selectedLines.length > 0 &&
         selectionState.selectedLines.every(
           (l) => l.narrativeThreadId === '',
