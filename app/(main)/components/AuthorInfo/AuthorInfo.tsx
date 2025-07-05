@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google'
 import ProfilePicture from '../ProfilePicture'
 import { Author, getUser } from '../../api/getUser'
 import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 
@@ -16,16 +17,26 @@ export default function AuthorInfo({
   orientation: Orientation
   hidePseudonym?: boolean
 }>) {
+  const router = useRouter()
+
   const orientationClass =
     orientation == Orientation.LEFT
       ? 'flex-row justify-start'
       : 'flex-row-reverse justify-end'
+
+  const getUserId = () => {
+    const matches = document.cookie.matchAll(/accountId=[\dA-Za-z-]{36}/g)
+    const id = matches.next().value?.[0].split('=')[1]
+    if (!id) router.replace('/login')
+    return id
+  }
+
   const [user, setUser] = useState({} as Author)
-  const id = useRef(localStorage.getItem('userId')!)
+  const id = useRef(getUserId())
 
   useEffect(() => {
     const fetchUser = async () => {
-      setUser(await findCurrentUser(id.current))
+      setUser(await findCurrentUser(id.current!))
     }
     fetchUser()
   }, [])
