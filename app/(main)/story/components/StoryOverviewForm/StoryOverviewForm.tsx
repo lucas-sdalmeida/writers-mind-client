@@ -15,11 +15,14 @@ import { useRouter } from 'next/navigation'
 import { postStory } from '../../api/postStory'
 import type { Story } from '../../api'
 import { updateStory } from '../../[storyId]/api'
+import { useAuthorId } from '../../hooks/useAuthorId'
 
 export default function StoryOverviewForm({
   story,
   className,
 }: Readonly<{ story?: Story; className?: string }>) {
+  const authorId = useAuthorId()
+
   const [editingStory, setEditingStory] = useState(
     story || ({} as EditingStory),
   )
@@ -38,7 +41,7 @@ export default function StoryOverviewForm({
       return
     }
 
-    const id = await postStory({
+    const id = await postStory(authorId!, {
       ...editingStory,
       title: editingStory.title ?? '',
     })

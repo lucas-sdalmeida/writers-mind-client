@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
 
@@ -6,12 +8,22 @@ import { LibraryBig, BookPlus, Trash2, Plus } from 'lucide-react'
 import SideBar, { LinkOption } from '../components/SideBar'
 import StoryCard from './components/StoryCard'
 import { SearchField } from '../components/InputField'
-import { getAllStories } from './api'
+import { getAllStories, Story } from './api'
+import { useEffect, useState } from 'react'
+import { useAuthorId } from './hooks/useAuthorId'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 
-export default async function HomePage() {
-  const stories = await getAllStories()
+export default function HomePage() {
+  const authorId = useAuthorId()
+  const [stories, setStories] = useState([] as Story[])
+
+  useEffect(() => {
+    ;(async () => {
+      if (!authorId) return
+      setStories(await getAllStories(authorId))
+    })()
+  }, [authorId, setStories])
 
   return (
     <div className='w-full h-full px-8 pt-10 pb-6 grid grid-cols-12 grid-rows-1'>
