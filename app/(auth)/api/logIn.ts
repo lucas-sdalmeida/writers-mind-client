@@ -1,5 +1,5 @@
-export async function createUser(request: CreateUserRequest) {
-  const response = await fetch('http://localhost:8080/account/signup', {
+export async function logIn(request: CreateUserRequest) {
+  const response = await fetch('http://localhost:8080/account/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -10,8 +10,6 @@ export async function createUser(request: CreateUserRequest) {
 }
 
 export type CreateUserRequest = {
-  name: string
-  pseudonym?: string
   email: string
   password: string
 }

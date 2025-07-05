@@ -7,7 +7,7 @@ import { InputField } from '@/app/(main)/components/InputField'
 import { ConfirmButton } from '@/app/(main)/components/Button'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { getUsers } from '../api/getUsers'
+import { logIn } from '../api/logIn'
 
 const mrDafoe = Mr_Dafoe({ weight: '400', subsets: ['latin'] })
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
@@ -29,18 +29,16 @@ export default function LoginPage() {
       return
     }
 
-    const users = await getUsers()
-    const user = users.find(
-      (u) =>
-        u.email === credentials.email && u.password === credentials.password,
-    )
+    const accountId = await logIn({
+      email: credentials.email,
+      password: credentials.password,
+    })
 
-    if (!user) {
-      setError('Email ou senha inválidos!')
-      return
-    }
+    const expirationDate = new Date()
+    expirationDate.setTime(expirationDate.getTime() + 4 * 24 * 3600 * 1000)
 
-    window.localStorage.setItem('userId', user.id)
+    document.cookie = `accountId=${accountId}; expires=${expirationDate.toUTCString()}; path=/`
+    console.log(document.cookie)
     router.push('/story')
   }
 

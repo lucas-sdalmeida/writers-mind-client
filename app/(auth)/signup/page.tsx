@@ -11,7 +11,6 @@ import ProfilePicture from '@/app/(main)/components/ProfilePicture'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { getUsers } from '../api/getUsers'
 import { createUser } from '../api/createUser'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
@@ -46,15 +45,18 @@ export default function SignUpPage() {
       return
     }
 
-    const users = await getUsers()
+    const requestProvider = ({
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      passwordConfirmation,
+      ...rest
+    }: typeof credentials) => rest
+    const accountId = await createUser(requestProvider(credentials))
 
-    if (users.some((u) => u.email === credentials.email)) {
-      setError('Já existe um usuário com esse email!')
-      return
-    }
+    const expirationDate = new Date()
+    expirationDate.setTime(expirationDate.getTime() + 24 * 3600 * 1000)
 
-    const id = await createUser(credentials)
-    window.localStorage.setItem('authorId', id)
+    document.cookie = `accountId=${accountId}; expires=${expirationDate.toUTCString()}; path=/`
+    console.log(document.cookie)
 
     router.push('/story')
   }
