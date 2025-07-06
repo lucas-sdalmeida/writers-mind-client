@@ -1,8 +1,9 @@
-import { baseUrl } from '../../../../../../api.json'
 import type { NarrativeThread } from '../context/timeline'
 
-export async function getTimeline(storyId: string) {
-  const response = await fetch(`${baseUrl}/timeline/${storyId}`)
+export async function getTimeline(authorId: string, storyId: string) {
+  const response = await fetch(
+    `http://localhost:8080/author/${authorId}/story/${storyId}/timeline`,
+  )
   const json = await response.json()
 
   console.log(json)

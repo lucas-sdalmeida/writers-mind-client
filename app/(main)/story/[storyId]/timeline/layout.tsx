@@ -7,6 +7,7 @@ import NarrativeThreadModal from './components/NarrativeThreadModal'
 import TimeLineContextProvider from './context/TimeLineContext'
 import SelectionContextProvider from './context/SelectionContext'
 import { getTimeline } from './api/getTimeline'
+import { cookies } from 'next/headers'
 
 const inter = Inter({ weight: '600', subsets: ['latin'] })
 
@@ -15,8 +16,14 @@ export default async function TimeLineLayout({
   children,
   fragmentModal,
 }: Readonly<Props>) {
-  const { storyId } = await params
-  const timeline = await getTimeline(storyId)
+  const cookieStorePromise = cookies()
+  const [cookieStore, { storyId }] = await Promise.all([
+    cookieStorePromise,
+    params,
+  ])
+
+  const authorId = cookieStore.get('accountId')!.value
+  const timeline = await getTimeline(authorId, storyId)
 
   return (
     <div className='w-full h-full relative flex justify-start items-center'>
