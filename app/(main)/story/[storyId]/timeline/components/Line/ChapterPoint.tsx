@@ -59,7 +59,7 @@ export default function ChapterPoint({
         {...listeners}
         className='h-4 rounded-md absolute z-20'
         style={{
-          width: `calc(4rem * ${point.actualPosition.width ?? 1})`,
+          width: `calc(4rem * ${point.width ?? 1})`,
           background: `linear-gradient(90deg, ${line.preferences.color} 0%, transparent 7%, transparent 93%, ${line.preferences.color} 100%)`,
           left: `calc(${offset}px + 4rem * ${point.actualPosition.x})`,
           transform: transformStyle ?? undefined,
@@ -73,7 +73,7 @@ export default function ChapterPoint({
         <p
           className={`${quicksand.className} text-xs px-2 rounded-md shadow-md bg-white absolute z-30 -translate-x-1/2 -translate-y-[150%]`}
           style={{
-            left: `calc(${offset}px + 4rem * ${point.actualPosition.x} + 2rem * ${point.actualPosition.width ?? 1})`,
+            left: `calc(${offset}px + 4rem * ${point.actualPosition.x} + 2rem * ${point.width ?? 1})`,
           }}
         >
           {point.title}

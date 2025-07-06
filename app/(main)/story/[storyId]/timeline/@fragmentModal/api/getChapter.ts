@@ -1,7 +1,11 @@
-import { baseUrl } from '../../../../../../../api.json'
-
-export async function getChapter(chapterId: string) {
-  const response = await fetch(`${baseUrl}/fragment/${chapterId}`)
+export async function getChapter(
+  authorId: string,
+  storyId: string,
+  chapterId: string,
+) {
+  const response = await fetch(
+    `http://localhost:8080/author/${authorId}/story/${storyId}/timeline/fragment/${chapterId}`,
+  )
   const json = await response.json()
   return json as Chapter
 }
@@ -9,10 +13,11 @@ export async function getChapter(chapterId: string) {
 export type Chapter = {
   id: string
   storyId: string
+  narrativeThreadId?: string
   volumeId?: string
   characterId?: string
   title: string
-  type: 'chapter'
+  type: 'chapter' | 'excerpt'
   summary?: string
   momentDate?: Date
   momentTime?: Date

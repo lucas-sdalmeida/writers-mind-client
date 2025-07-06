@@ -15,14 +15,16 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useTimelineContext } from '../../../context/TimeLineContext'
 import type { Chapter } from '../../api/getChapter'
-import { Point } from '../../../context/timeline'
+import { useAuthorId } from '@/app/(main)/story/hooks/useAuthorId'
 import { postFragment } from '../../api/postFragment'
-import { putFragment } from '../../api/putFragment'
+import { Point } from '../../../context/timeline'
+import { postChapter } from '../../api/postChapter'
 
 const quicksand = Quicksand({ weight: '400', subsets: ['latin'] })
 
-export default function FragmentModal({ fragment: fragment }: Readonly<Props>) {
+export default function FragmentModal({ fragment }: Readonly<Props>) {
   const router = useRouter()
+  const authorId = useAuthorId()
 
   const { timeline, addingPointData, dispatch } = useTimelineContext()
   const [editingFragment, setEditingFragment] = useState<EditingFragment>(
@@ -59,83 +61,90 @@ export default function FragmentModal({ fragment: fragment }: Readonly<Props>) {
       return
     }
 
-    router.back()
-    const data = addingPointData.current!
-
-    const id = !fragment
-      ? ('' + Math.random() * 1000).replace('.', '-')
-      : fragment.id
-
-    const point = {
-      id,
-      storyId: timeline.storyId,
-      volumeId: data.volumeId,
-      characterId: data.characterId,
-      chapterId: data.chapterId,
-      type: editingFragment.type,
-      title: editingFragment.title!,
-      actualPosition:
-        editingFragment.type === 'excerpt'
-          ? data.position
-          : { ...data.position, width: 1 },
+    if (!fragment && editingFragment.type === 'excerpt') {
+      const point = (await handlePostFragment()) as Point
+      dispatch({ type: 'add-point', point })
+    }
+    if (!fragment && editingFragment.type === 'chapter') {
+      const { chapter, excerpt } = await handlePostChapter()
+      dispatch({ type: 'add-point', point: chapter, chapterPoint: excerpt })
+    }
+    if (fragment && editingFragment.type === 'chapter') {
+      const point = await handlePostFragmentToChapter()
+      dispatch({ type: 'add-point', point })
     }
 
-    const chapterPoint =
-      editingFragment.type === 'excerpt'
-        ? undefined
-        : ({
-            id: ('' + Math.random() * 1000).replace('.', '-'),
-            storyId: timeline.storyId,
-            volumeId: data.volumeId,
-            characterId: data.characterId,
-            chapterId: id,
-            title: innerExcerpt!.title!,
-            type: 'excerpt',
-            actualPosition: { ...data.position, x: data.position.x + 0.2 },
-          } as Point)
+    router.back()
+  }
 
-    const fragmentRequest = {
-      ...editingFragment,
-      ...point,
-      position: point.actualPosition,
+  const handlePostFragment = async () => {
+    const data = addingPointData.current!
+
+    const request = {
+      title: editingFragment.title!,
+      summary: editingFragment.summary,
       momentDate: editingFragment.momentDate
         ? new Date(editingFragment.momentDate)
         : undefined,
       momentTime: editingFragment.momentTime
         ? new Date(editingFragment.momentTime)
         : undefined,
-      content:
-        editingFragment.type === 'chapter'
-          ? undefined
-          : editingFragment.content,
+      content: editingFragment.content,
+      volumeId: data.volumeId,
+      characterId: data.characterId,
+      chapterId: data.chapterId,
+      line: data.position.line,
+      x: data.position.x,
     }
-    const fragmentPromise = !fragment
-      ? postFragment(timeline.storyId, fragmentRequest)
-      : putFragment(point.id, fragmentRequest)
 
-    const innerFragmentRequest = innerExcerpt && {
-      ...innerExcerpt,
-      ...chapterPoint!,
-      position: chapterPoint!.actualPosition,
-      momentDate: innerExcerpt.momentDate
-        ? new Date(innerExcerpt.momentDate)
+    return await postFragment(authorId!, timeline.storyId, request)
+  }
+
+  const handlePostChapter = async () => {
+    const data = addingPointData.current!
+
+    const request = {
+      title: editingFragment.title!,
+      summary: editingFragment.summary,
+      momentDate: editingFragment.momentDate
+        ? new Date(editingFragment.momentDate)
         : undefined,
-      momentTime: innerExcerpt.momentTime
-        ? new Date(innerExcerpt.momentTime)
+      momentTime: editingFragment.momentTime
+        ? new Date(editingFragment.momentTime)
         : undefined,
       content: editingFragment.content,
+      volumeId: data.volumeId,
+      characterId: data.characterId,
+      line: data.position.line,
+      x: data.position.x,
+      excerptTitle: innerExcerpt!.title!,
+      excerptSummary: innerExcerpt!.summary,
     }
-    const innerFragmentPromise = innerFragmentRequest
-      ? postFragment(timeline.storyId, innerFragmentRequest)
-      : Promise.resolve()
 
-    await Promise.all([fragmentPromise, innerFragmentPromise])
+    return await postChapter(authorId!, timeline.storyId, request)
+  }
 
-    dispatch({
-      type: 'add-point',
-      point: point,
-      chapterPoint: chapterPoint,
-    })
+  const handlePostFragmentToChapter = async () => {
+    const data = addingPointData.current!
+
+    const request = {
+      title: innerExcerpt!.title!,
+      summary: innerExcerpt!.summary,
+      momentDate: innerExcerpt!.momentDate
+        ? new Date(innerExcerpt!.momentDate)
+        : undefined,
+      momentTime: innerExcerpt!.momentTime
+        ? new Date(innerExcerpt!.momentTime)
+        : undefined,
+      content: editingFragment.content,
+      volumeId: data.volumeId,
+      characterId: data.characterId,
+      chapterId: fragment!.id,
+      line: data.position.line,
+      x: data.position.x,
+    }
+
+    return await postFragment(authorId!, timeline.storyId, request)
   }
 
   return (

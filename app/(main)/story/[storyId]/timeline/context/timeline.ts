@@ -22,12 +22,14 @@ export type Line = {
 export type Point = {
   id: string
   storyId: string
+  narrativeThreadId?: string
   volumeId?: string
   characterId?: string
   chapterId?: string
   type: 'excerpt' | 'chapter'
   title: string
-  actualPosition: { line: number; x: number; width?: number }
+  actualPosition: { line: number; x: number }
+  width?: number
 }
 
 export default Timeline
