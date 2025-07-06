@@ -28,7 +28,7 @@ export default function ChapterPoint({
     data: point,
   })
   const { setNodeRef: setDroppableRef } = useDroppable({
-    id: `${point.volumeId ?? ''}.${point.characterId ?? ''}.${line.index}.${point.id}`,
+    id: `${point.narrativeThreadId}.${point.volumeId ?? ''}.${point.characterId ?? ''}.${line.index}.${point.id}`,
   })
   const { addingPointData } = useTimelineContext()
 

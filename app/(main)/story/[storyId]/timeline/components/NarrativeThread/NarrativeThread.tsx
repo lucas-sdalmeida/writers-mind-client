@@ -25,6 +25,7 @@ function NarrativeThread({ storyId, thread }: Readonly<Props>) {
         <Line
           storyId={storyId}
           key={l.index}
+          threadId={thread.id}
           volumeId={thread.volumeId}
           characterId={thread.characterId}
           line={l}

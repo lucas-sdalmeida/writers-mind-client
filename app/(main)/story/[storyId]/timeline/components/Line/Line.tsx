@@ -9,9 +9,15 @@ import Thread from './Thread'
 
 import { useDroppable } from '@dnd-kit/core'
 
-function Line({ storyId, line, volumeId, characterId }: Readonly<Props>) {
+function Line({
+  storyId,
+  line,
+  threadId,
+  volumeId,
+  characterId,
+}: Readonly<Props>) {
   const { setNodeRef } = useDroppable({
-    id: `${volumeId ?? ''}.${characterId ?? ''}.${line.index}.`,
+    id: `${threadId}.${volumeId ?? ''}.${characterId ?? ''}.${line.index}.`,
   })
 
   return (
@@ -44,6 +50,7 @@ function Line({ storyId, line, volumeId, characterId }: Readonly<Props>) {
 
 type Props = {
   storyId: string
+  threadId?: string
   volumeId?: string
   characterId?: string
   line: LineData
