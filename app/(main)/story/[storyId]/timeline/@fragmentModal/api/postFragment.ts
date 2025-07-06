@@ -23,6 +23,7 @@ export async function postFragment(
 
 export type PostFragmentRequest = {
   title: string
+  narrativeThreadId?: string
   volumeId?: string
   characterId?: string
   chapterId?: string

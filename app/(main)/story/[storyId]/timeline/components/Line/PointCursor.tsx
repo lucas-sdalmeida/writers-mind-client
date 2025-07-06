@@ -10,6 +10,7 @@ import { useKeyUp } from '../../hooks/useKeyUp'
 
 export default function PointCursor({
   storyId,
+  narrativeThreadId,
   volumeId,
   characterId,
   lineIndex,
@@ -35,6 +36,7 @@ export default function PointCursor({
 
   const handleNewPoint = () => {
     addingPointData.current = {
+      narrativeThreadId: narrativeThreadId,
       volumeId,
       characterId,
       position: { line: lineIndex, x: (newPointPosition - 350) / unitsInPx },
@@ -68,6 +70,7 @@ export default function PointCursor({
 type Props = {
   storyId: string
   volumeId?: string
+  narrativeThreadId?: string
   characterId?: string
   lineIndex: number
   color: string

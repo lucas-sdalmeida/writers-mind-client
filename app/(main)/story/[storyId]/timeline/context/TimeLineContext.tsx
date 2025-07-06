@@ -23,6 +23,7 @@ type TimeLineContextData = {
 }
 
 type AddingPointData = {
+  narrativeThreadId?: string
   volumeId?: string
   characterId?: string
   chapterId?: string

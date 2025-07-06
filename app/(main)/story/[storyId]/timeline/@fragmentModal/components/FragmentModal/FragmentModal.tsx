@@ -71,6 +71,7 @@ export default function FragmentModal({ fragment }: Readonly<Props>) {
     }
     if (fragment && editingFragment.type === 'chapter') {
       const point = await handlePostFragmentToChapter()
+      console.log(point)
       dispatch({ type: 'add-point', point })
     }
 
@@ -90,6 +91,7 @@ export default function FragmentModal({ fragment }: Readonly<Props>) {
         ? new Date(editingFragment.momentTime)
         : undefined,
       content: editingFragment.content,
+      narrativeThreadId: data.narrativeThreadId,
       volumeId: data.volumeId,
       characterId: data.characterId,
       chapterId: data.chapterId,
@@ -113,6 +115,7 @@ export default function FragmentModal({ fragment }: Readonly<Props>) {
         ? new Date(editingFragment.momentTime)
         : undefined,
       content: editingFragment.content,
+      narrativeThreadId: data.narrativeThreadId,
       volumeId: data.volumeId,
       characterId: data.characterId,
       line: data.position.line,
@@ -137,6 +140,7 @@ export default function FragmentModal({ fragment }: Readonly<Props>) {
         ? new Date(innerExcerpt!.momentTime)
         : undefined,
       content: editingFragment.content,
+      narrativeThreadId: data.narrativeThreadId,
       volumeId: data.volumeId,
       characterId: data.characterId,
       chapterId: fragment!.id,

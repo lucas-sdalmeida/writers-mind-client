@@ -35,6 +35,7 @@ function Line({
 
       <PointCursor
         storyId={storyId}
+        narrativeThreadId={threadId}
         volumeId={volumeId}
         characterId={characterId}
         lineIndex={line.index}

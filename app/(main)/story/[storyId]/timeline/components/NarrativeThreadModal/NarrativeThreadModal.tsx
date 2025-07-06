@@ -5,16 +5,29 @@ import { ConfirmButton, DangerButton } from '@/app/(main)/components/Button'
 import { useState } from 'react'
 import { useSelectionContext } from '../../context/SelectionContext'
 import { useTimelineContext } from '../../context/TimeLineContext'
+import { useAuthorId } from '@/app/(main)/story/hooks/useAuthorId'
+import { postNarrativeThread } from '../../api/postNarrativeThread'
 
 export default function NarrativeThreadModal() {
-  const { dispatch } = useTimelineContext()
+  const authorId = useAuthorId()
+
+  const { timeline, dispatch } = useTimelineContext()
   const { selectionState, clear, stopAddingThread } = useSelectionContext()
   const [title, setTitle] = useState('')
 
-  const handleOnSave = () => {
+  const handleOnSave = async () => {
+    const { narrativeThread: thread } = await postNarrativeThread(
+      authorId!,
+      timeline.storyId,
+      {
+        title,
+        lines: selectionState.selectedLines.map((l) => l.line),
+      },
+    )
+
     dispatch({
       type: 'new-narrative-thread',
-      title,
+      thread,
       lines: selectionState.selectedLines.map((l) => l.line),
     })
     clear()

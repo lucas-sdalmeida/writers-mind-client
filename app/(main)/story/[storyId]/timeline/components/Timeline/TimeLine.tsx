@@ -55,8 +55,6 @@ export default function Timeline({ className }: Readonly<Props>) {
               request,
             )
 
-      console.log(movedFragments)
-
       dispatch({
         type: 'move-point',
         movedPoints: movedFragments,

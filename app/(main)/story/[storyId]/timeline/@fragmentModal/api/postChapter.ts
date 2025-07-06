@@ -22,6 +22,7 @@ export async function postChapter(
 
 export type PostFragmentRequest = {
   title: string
+  narrativeThreadId?: string
   volumeId?: string
   characterId?: string
   summary?: string

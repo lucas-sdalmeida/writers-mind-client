@@ -39,6 +39,7 @@ export default function ChapterPoint({
     if (transform) return
 
     addingPointData.current = {
+      narrativeThreadId: point.narrativeThreadId,
       volumeId: point.volumeId,
       characterId: point.characterId,
       chapterId: point.chapterId,
