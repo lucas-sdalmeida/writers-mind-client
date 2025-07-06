@@ -23,7 +23,36 @@ function movePoint(previous: Timeline, { movedPoints }: MovePointAction) {
       )
       return { ...l, points: [...points, ...addingPoints] }
     })
-    return { ...t, lines }
+
+    const newLines = {} as { [index: number]: Line }
+
+    Object.values(movedPoints)
+      .filter((p) => p.actualPosition.line >= lines.length)
+      .forEach((p) => {
+        if (newLines[p.actualPosition.line]) {
+          const l = newLines[p.actualPosition.line]
+          newLines[p.actualPosition.line] = { ...l, points: [...l.points, p] }
+          return
+        }
+
+        newLines[p.actualPosition.line] = {
+          index: p.actualPosition.line,
+          preferences: {
+            name: `linha ${p.actualPosition.line + 1}`,
+            color: generateRandomHexColor(),
+          },
+          points: [p],
+        }
+      })
+
+    const newLinesArray = Object.values(newLines).sort(
+      (a, b) => a.index - b.index,
+    )
+
+    return {
+      ...t,
+      lines: newLinesArray.length === 0 ? lines : [...lines, ...newLinesArray],
+    }
   })
   return { ...previous, narrativeThreads } as Timeline
 }
@@ -62,7 +91,23 @@ function addPoint(previous: Timeline, { point, chapterPoint }: AddPointAction) {
       }
     })
 
-    return { ...t, lines }
+    return {
+      ...t,
+      lines:
+        point.actualPosition.line < lines.length
+          ? lines
+          : [
+              ...lines,
+              {
+                index: point.actualPosition.line,
+                preferences: {
+                  name: `linha ${point.actualPosition.line + 1}`,
+                  color: generateRandomHexColor(),
+                },
+                points: chapterPoint ? [point, chapterPoint] : [point],
+              },
+            ],
+    }
   })
 
   return { ...previous, narrativeThreads } as Timeline
